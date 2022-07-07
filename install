@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+set -e
+
+# go to DOTFILES folder
+DOTFILES=$HOME/programming/aux/.dotfiles
+cd $DOTFILES
+
+# load stow folders
+STOW_FOLDERS=("bash" "i3" "nvim" "tmux")
+
+# Installing all dotfiles
+for folder in ${STOW_FOLDERS[@]}; do
+    echo Installing $folder...
+#    Use adopt with caution! It will replace target files. Use `stow -nvt ~` to see the changes first.
+#    stow --adopt -vt ~ $folder
+    stow -vt ~ $folder
+done
+echo Done!
+
+# come back to the previous working dir
+cd -
