@@ -16,7 +16,8 @@ PS1='[\u@\h \W]\$ '
 if [[ $DISPLAY ]]; then
     # If not running interactively, do not do anything
     [[ $- != *i* ]] && return
-    [[ -z "$TMUX" ]] && exec tmux
+    # Attach to a running tmux session or create a new one if none exists
+    [[ -z "$TMUX" ]] && $(tmux attach || tmux)
 fi
 
 # Increase key speed via a rate change
