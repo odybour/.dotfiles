@@ -25,3 +25,26 @@ syntax on
 let mapleader = " "
 
 lua require("ody")
+
+" Map window key to <alt+w>, then map horizontal and vertical window split keys
+nnoremap <M-w> <C-w>
+nnoremap <M-w>k <C-w>s
+nnoremap <M-w>l <C-w>v
+
+nnoremap <leader>pv :Ex<CR>
+
+" Map alternate file to <alt-h>
+nnoremap <M-h> <C-^>
+
+"function! GoBackToRecentBuffer()
+"  let startName = bufname('%')
+"  while 1
+"    exe "normal! \<c-o>"
+"    let nowName = bufname('%')
+"    if nowName != startName
+"      break
+"    endif
+"  endwhile
+"ndfunction
+"
+"nnoremap <silent> <M-h> :call GoBackToRecentBuffer()<Enter>
