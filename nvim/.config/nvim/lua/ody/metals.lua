@@ -52,8 +52,8 @@ vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
 
 -- code action
 local action = require("lspsaga.codeaction")
-vim.keymap.set("n", "<leader>ca", action.code_action, { silent = true })
-vim.keymap.set("v", "<leader>ca", function()
+vim.keymap.set("n", "<M-enter>", action.code_action, { silent = true })
+vim.keymap.set("v", "<M-enter>", function()
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-U>", true, false, true))
     action.range_code_action()
 end, bufopts)
