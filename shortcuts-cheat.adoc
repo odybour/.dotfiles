@@ -1,0 +1,65 @@
+== TMUX
+
+leader key: alt-tab
+
+Open a new tmux session at a specific path: 
+
+    # .bashrc shortcut that execute tmux-sessionizer script:
+    C-f 
+
+Cycle through tmux sessions
+
+    alt-tab-0
+
+Kill tmux session
+
+    # While in session list, enter command: 
+    :kill-session
+
+Attach to a tmux session
+
+   tmux attach 
+
+Create a new tmux window
+
+    alt-tab-<ijkl>
+
+Change tmux window
+
+    alt-tab-o
+
+
+== NVIM 
+
+<leader> = space
+
+Telescope: Search git files
+
+    C-p
+
+Telescope: Search any file
+
+    <leader> pf
+
+Nerdtree: Manage files
+
+    C-n
+    # open nerdtree menu
+    m 
+
+Window: Move between windows
+
+    alt-w <arrow keys>
+    
+Window: Create windows
+
+    alt-w <ijkl>
+
+Window: Resize
+
+    # While in command mode press any of
+    +, _, >, <
+
+Back to previous file (alternate)
+
+    alt-h
