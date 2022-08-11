@@ -55,11 +55,11 @@ Nerdtree: Manage files
 
 Window: Move between windows
 
-    alt-w <arrow keys>
+    alt-w <ijkl>
     
 Window: Create windows
 
-    alt-w <ijkl>
+    alt-w [,]
 
 Window: Resize
 

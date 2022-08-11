@@ -32,8 +32,12 @@ lua require("ody")
 
 " Map window key to <alt+w>, then map horizontal and vertical window split keys
 nnoremap <M-w> <C-w>
-nnoremap <M-w>k <C-w>s
-nnoremap <M-w>l <C-w>v
+nnoremap <M-w>[ <C-w>s
+nnoremap <M-w>] <C-w>v
+nnoremap <M-w>i <C-w><Up>
+nnoremap <M-w>j <C-w><Left>
+nnoremap <M-w>k <C-w><Down>
+nnoremap <M-w>l <C-w><Right>
 
 nnoremap <leader>pv :Ex<CR>
 

@@ -76,20 +76,6 @@ end, bufopts)
 
 map("n", "<leader>l", '<cmd>lua require"metals".toggle_logs("sp")<CR>')
 
--- Example mappings for usage with nvim-dap. If you don't use that, you can
--- skip these
-map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]])
-map("n", "<F8>", [[<cmd>lua require"dap".continue()<CR>]])
-map("n", "<F6>", [[<cmd>lua require"dap".step_over()<CR>]])
-map("n", "<F5>", [[<cmd>lua require"dap".step_into()<CR>]])
-map("n", "<leader>b", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]])
-map("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]])
-
-map("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]])
-map("n", "<leader>dhh", [[<cmd>lua require"dap.ui.variables".hover()<CR>]])
-map("n", "<leader>dhv", [[<cmd>lua require"dap.ui.variables".visual_hover()<CR>]])
-
--- map({ "n", "<leader>duf", ":lua local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<CR>" })
 
 -- completion related settings
 -- This is similiar to what I use
@@ -174,17 +160,6 @@ dap.configurations.scala = {
   },
 }
 
-local dapui = require("dapui")
-dap.listeners.after['event_initialized']['dapui_config'] = function()
-  dapui.open()
-end
---dap.listeners.before['event_terminated']['dapui_config'] = function()
-  --dapui.close()
---end
---dap.listeners.before['event_exited']['dapui_config'] = function()
-  --dapui.close()
---end
-dapui.setup({})
 
 metals_config.on_attach = function(client, bufnr)
   require("metals").setup_dap()
