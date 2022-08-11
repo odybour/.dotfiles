@@ -28,6 +28,12 @@ Change tmux window
 
     alt-tab-o
 
+Create session with name
+
+    # While in session list:
+    :new -s mysession
+
+https://tmuxcheatsheet.com/
 
 == NVIM 
 
