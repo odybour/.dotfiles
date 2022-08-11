@@ -213,3 +213,7 @@ bindsym $mod+n move workspace to output next
 # Plasma compatibility improvements
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
+
+exec --no-startup-id i3-msg 'workspace 13; exec /usr/bin/konsole'
+exec --no-startup-id i3-msg 'workspace 1; exec /usr/bin/google-chrome-stable'
+exec --no-startup-id i3-msg 'workspace 2; exec /usr/bin/konsole2'

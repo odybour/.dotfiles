@@ -25,3 +25,6 @@ set nocompatible
 
 " Ensure autocmd works for Filetype
 set shortmess-=F
+
+" Use system clipboard by default
+set clipboard+=unnamedplus

@@ -1,5 +1,4 @@
-" Start NERDTree and leave the cursor in other window.
-autocmd VimEnter * NERDTree
+let NERDTreeShowHidden=1
 
 " Key mappings
 map <silent> <C-n> :NERDTreeFocus<CR>

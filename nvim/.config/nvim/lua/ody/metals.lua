@@ -50,16 +50,14 @@ vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 vim.keymap.set('n', '<leader>rn', require("lspsaga.rename").lsp_rename, bufopts)
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
 
-local action = require("lspsaga.codeaction")
-
 -- code action
+local action = require("lspsaga.codeaction")
 vim.keymap.set("n", "<leader>ca", action.code_action, { silent = true })
 vim.keymap.set("v", "<leader>ca", function()
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-U>", true, false, true))
     action.range_code_action()
 end, bufopts)
 
--- map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 map("n", "<leader>ws", '<cmd>lua require"metals".hover_worksheet()<CR>')
 
 vim.keymap.set('n', '<leader>aa', vim.diagnostic.setqflist, bufopts) -- all workspace diagnostics
@@ -76,15 +74,22 @@ vim.keymap.set('n', '<leader>wl', function()
 print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end, bufopts)
 
+map("n", "<leader>l", '<cmd>lua require"metals".toggle_logs("sp")<CR>')
+
 -- Example mappings for usage with nvim-dap. If you don't use that, you can
 -- skip these
-map("n", "<leader>dc", [[<cmd>lua require"dap".continue()<CR>]])
 map("n", "<leader>dr", [[<cmd>lua require"dap".repl.toggle()<CR>]])
-map("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]])
-map("n", "<leader>dt", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]])
-map("n", "<leader>dso", [[<cmd>lua require"dap".step_over()<CR>]])
-map("n", "<leader>dsi", [[<cmd>lua require"dap".step_into()<CR>]])
+map("n", "<F8>", [[<cmd>lua require"dap".continue()<CR>]])
+map("n", "<F6>", [[<cmd>lua require"dap".step_over()<CR>]])
+map("n", "<F5>", [[<cmd>lua require"dap".step_into()<CR>]])
+map("n", "<leader>b", [[<cmd>lua require"dap".toggle_breakpoint()<CR>]])
 map("n", "<leader>dl", [[<cmd>lua require"dap".run_last()<CR>]])
+
+map("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]])
+map("n", "<leader>dhh", [[<cmd>lua require"dap.ui.variables".hover()<CR>]])
+map("n", "<leader>dhv", [[<cmd>lua require"dap.ui.variables".visual_hover()<CR>]])
+
+-- map({ "n", "<leader>duf", ":lua local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<CR>" })
 
 -- completion related settings
 -- This is similiar to what I use
@@ -168,6 +173,18 @@ dap.configurations.scala = {
     },
   },
 }
+
+local dapui = require("dapui")
+dap.listeners.after['event_initialized']['dapui_config'] = function()
+  dapui.open()
+end
+--dap.listeners.before['event_terminated']['dapui_config'] = function()
+  --dapui.close()
+--end
+--dap.listeners.before['event_exited']['dapui_config'] = function()
+  --dapui.close()
+--end
+dapui.setup({})
 
 metals_config.on_attach = function(client, bufnr)
   require("metals").setup_dap()
