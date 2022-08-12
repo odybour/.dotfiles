@@ -1,6 +1,7 @@
 
 filetype off
 
+" Install with :PlugInstall
 call plug#begin('~/.config/nvim/plugged')
     Plug 'morhetz/gruvbox'
     Plug 'tpope/vim-fugitive'
@@ -34,9 +35,9 @@ lua require("ody")
 nnoremap <M-w> <C-w>
 nnoremap <M-w>[ <C-w>s
 nnoremap <M-w>] <C-w>v
-nnoremap <M-w>i <C-w><Up>
-nnoremap <M-w>j <C-w><Left>
-nnoremap <M-w>k <C-w><Down>
+nnoremap <M-w>k <C-w><Up>
+nnoremap <M-w>h <C-w><Left>
+nnoremap <M-w>j <C-w><Down>
 nnoremap <M-w>l <C-w><Right>
 
 nnoremap <leader>pv :Ex<CR>
@@ -44,13 +45,13 @@ nnoremap <leader>pv :Ex<CR>
 " Map alternate file to <alt-h>
 nnoremap <M-h> <C-^>
 
-nnoremap + :res +5<CR>
-nnoremap _ :res -5<CR>
+nnoremap ( :res +5<CR>
+nnoremap ) :res -5<CR>
 nnoremap > :vertical resize +5<CR>
 nnoremap < :vertical resize -5<CR>
 
-nnoremap ) <C-w>K
-nnoremap ( <C-w>J
+nnoremap _ <C-w>K
+nnoremap + <C-w>J
 
 "function! GoBackToRecentBuffer()
 "  let startName = bufname('%')

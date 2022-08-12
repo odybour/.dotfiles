@@ -13,7 +13,7 @@ vim.keymap.set('n', '<F8>', function() dap.continue() end)
 vim.keymap.set('n', '<F6>', function() dap.step_over() end)
 vim.keymap.set('n', '<F5>', function() dap.step_into() end)
 vim.keymap.set('n', '<leader>b', function() dap.toggle_breakpoint() end)
-vim.keymap.set('n', '<leader>dl', function() dap.run_last() end)
+vim.keymap.set('n', '<leader>dl>', function() dap.run_last() end)
 vim.keymap.set('n', '<leader>dc', function() dap.terminate() end)
 
 vim.keymap.set("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>]])

@@ -42,7 +42,7 @@ vim.opt_global.shortmess:remove("F"):append("c")
 -- LSP mappings
 local bufopts = { noremap=true, silent=true }
 -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)  -- this is not supported by metals
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+vim.keymap.set('n', '<F3>', vim.lsp.buf.definition, bufopts)
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
 vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
