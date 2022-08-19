@@ -19,7 +19,7 @@ set undofile
 set incsearch
 set scrolloff=8
 set colorcolumn=80
-set signcolumn=yes
+set signcolumn=auto:3
 set background=dark
 set nocompatible
 

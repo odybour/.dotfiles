@@ -61,8 +61,8 @@ end, bufopts)
 map("n", "<leader>ws", '<cmd>lua require"metals".hover_worksheet()<CR>')
 
 vim.keymap.set('n', '<leader>aa', vim.diagnostic.setqflist, bufopts) -- all workspace diagnostics
-map("n", "<leader>ae", [[<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>]]) -- all workspace errors
-map("n", "<leader>aw", [[<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>]]) -- all workspace warnings
+map("n", "<leader>e", [[<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>]]) -- all workspace errors
+map("n", "<leader>w", [[<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>]]) -- all workspace warnings
 
 vim.keymap.set('n', 'gds', vim.lsp.buf.document_symbol, bufopts)
 vim.keymap.set('n', 'gws', vim.lsp.buf.workspace_symbol, bufopts)
@@ -75,6 +75,7 @@ print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end, bufopts)
 
 map("n", "<leader>l", '<cmd>lua require"metals".toggle_logs("sp")<CR>')
+map("n", "<leader>o", '<cmd>lua require"metals".organize_imports()<CR>')
 
 
 

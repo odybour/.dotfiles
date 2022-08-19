@@ -35,6 +35,14 @@ Create session with name
 
 https://tmuxcheatsheet.com/
 
+Resize window panes
+
+    alt-tab - + z
+
+Reload tmux config
+
+    alt-tab r
+
 == NVIM 
 
 <leader> = space
@@ -45,12 +53,12 @@ Telescope: Search git files
 
 Telescope: Search any file
 
-    <leader> pf
+    C-f
 
 Nerdtree: Manage files
 
     C-n
-    # open nerdtree menu
+    # open nerdtree menu at path of opened file
     m 
 
 Window: Move between windows
@@ -64,7 +72,7 @@ Window: Create windows
 Window: Resize
 
     # While in command mode press any of
-    +, _, >, <
+    HJKL
 
 Back to previous file (alternate)
 

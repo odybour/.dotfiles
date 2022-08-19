@@ -43,12 +43,12 @@ nnoremap <M-w>l <C-w><Right>
 nnoremap <leader>pv :Ex<CR>
 
 " Map alternate file to <alt-h>
-nnoremap <M-h> <C-^>
+" nnoremap <M-h> <C-^>
 
-nnoremap ( :res +5<CR>
-nnoremap ) :res -5<CR>
-nnoremap > :vertical resize +5<CR>
-nnoremap < :vertical resize -5<CR>
+nnoremap J :res +5<CR>
+nnoremap K :res -5<CR>
+nnoremap L :vertical resize +5<CR>
+nnoremap H :vertical resize -5<CR>
 
 nnoremap _ <C-w>K
 nnoremap + <C-w>J
