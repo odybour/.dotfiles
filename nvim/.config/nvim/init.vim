@@ -53,6 +53,13 @@ nnoremap H :vertical resize -5<CR>
 nnoremap _ <C-w>K
 nnoremap + <C-w>J
 
+"Buffer Management
+"https://alpha2phi.medium.com/neovim-for-beginners-managing-buffers-91367668ce7
+"previous buffer
+nnoremap <M-left> <C-o>
+"next buffer
+nnoremap <M-right> <C-i>
+
 "function! GoBackToRecentBuffer()
 "  let startName = bufname('%')
 "  while 1
