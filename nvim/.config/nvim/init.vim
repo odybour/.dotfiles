@@ -60,6 +60,10 @@ nnoremap <M-left> <C-o>
 "next buffer
 nnoremap <M-right> <C-i>
 
+packadd cfilter
+
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 "function! GoBackToRecentBuffer()
 "  let startName = bufname('%')
 "  while 1
