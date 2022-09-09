@@ -39,5 +39,3 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 bind -x '"\C-f":tmux-sessionizer'
-
-source '/home/ody/lib/azure-cli/az.completion'

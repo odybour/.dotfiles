@@ -77,3 +77,4 @@ Window: Resize
 Back to previous file (alternate)
 
     alt-h
+
