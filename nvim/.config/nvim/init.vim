@@ -62,8 +62,22 @@ nnoremap <M-right> <C-i>
 
 packadd cfilter
 
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+" Replace highlighted text using space+r
+vnoremap <leader>r "hy:%s/<C-r>h//gc<left><left><left>
 
+" Replace all files in quickfix using space+r"
+" cfdo executes the passed command (i.e. s/<before>/<after>/gc) in all files in quickfix list.
+" note: 
+" % = every line
+" g = replace all occurences in file. 
+" c = ask confirmation
+nnoremap <leader>r "hy:cfdo %s///gc \| update<left><left><left><left><left><left><left><left><left><left><left><left><left>
+
+" Create a new quickfix list with the highlighted entries:
+vnoremap <leader>f "hy:Cfilter <C-r>h<CR>
+
+" Create a new quickfix list without the highlighted entries:
+vnoremap <leader>o "hy:Cfilter! <C-r>h<CR>
 
 "function! GoBackToRecentBuffer()
 "  let startName = bufname('%')

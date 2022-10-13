@@ -206,6 +206,7 @@ for_window [class="Slack"] move container to workspace $ws11
 for_window [class="zoom"] move container to workspace $ws12
 for_window [class="Atom"] move container to workspace $ws3
 for_window [class="F5 VPN"] move container to workspace $ws9
+for_window [class="VisualVM 2.1.4"] move container to workspace $ws3
 
 # Toggle between monitors
 bindsym $mod+n move workspace to output next

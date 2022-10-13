@@ -112,6 +112,7 @@ dap.configurations.scala = {
     metals = {
       runType = "runOrTestFile",
       --args = { "firstArg", "secondArg", "thirdArg" }, -- here just as an example
+      jvmOptions = {"-Xmx512m"}
     },
   },
   {

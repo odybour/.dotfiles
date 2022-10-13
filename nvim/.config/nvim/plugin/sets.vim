@@ -11,14 +11,14 @@ set tabstop=4 softtabstop=4
 set expandtab
 set shiftwidth=4
 set smartindent
-set nowrap
+set wrap
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set scrolloff=8
-set colorcolumn=80
+set colorcolumn=100
 set signcolumn=auto:3
 set background=dark
 set nocompatible
@@ -28,3 +28,5 @@ set shortmess-=F
 
 " Use system clipboard by default
 set clipboard+=unnamedplus
+
+nnoremap W :set wrap!<CR>
