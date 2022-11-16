@@ -37,7 +37,8 @@ end
 ----------------------------------
 -- global
 vim.opt_global.completeopt = { "menuone", "noinsert", "noselect" }
-vim.opt_global.shortmess:remove("F"):append("c")
+-- this no longer works... FIXME
+--vim.opt_global.shortmess:remove("F"):append("c")
 
 -- LSP mappings
 local bufopts = { noremap=true, silent=true }

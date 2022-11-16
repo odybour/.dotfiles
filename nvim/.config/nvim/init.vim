@@ -4,6 +4,7 @@ filetype off
 " Install with :PlugInstall
 call plug#begin('~/.config/nvim/plugged')
     Plug 'morhetz/gruvbox'
+    Plug 'mhinz/vim-signify'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'junegunn/gv.vim'
