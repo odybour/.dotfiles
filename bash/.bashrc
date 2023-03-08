@@ -24,15 +24,15 @@ fi
 
 
 source <(kubectl completion bash)
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 bind -x '"\C-f":tmux-sessionizer'
 
-source '/home/ody/lib/azure-cli/az.completion'
+#source '/home/bournas/lib/azure-cli/az.completion'
