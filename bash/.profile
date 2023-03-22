@@ -20,3 +20,4 @@ export PATH=$PATH:/home/bournas/.local/bin:/home/ody/tools:${METALS_HOME}
 # IMPORTANT: modify also the keyboard settings from KDE UI according to these values.
 # Increase key speed via a rate change
 xset r rate 300 50
+
