@@ -1,4 +1,4 @@
-
+local lspkind = require('lspkind')
 local cmp = require("cmp")
 
 cmp.setup({
@@ -17,6 +17,9 @@ cmp.setup({
     -- is no vim docs, but you can't have select = true here _unless_ you are
     -- also using the snippet stuff. So keep in mind that if you remove
     -- snippets you need to remove this select
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
     -- I use tabs... some say you should stick to ins-completion but this is just here as an example
     ["<Tab>"] = function(fallback)
@@ -34,4 +37,14 @@ cmp.setup({
       end
     end,
   }),
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol_text',
+      maxwidth = 50,
+      ellipsis_char = '...',
+      before = function (_, vim_item)
+        return vim_item
+      end
+    })
+  }
 })

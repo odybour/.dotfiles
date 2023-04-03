@@ -11,7 +11,7 @@ set tabstop=4 softtabstop=4
 set expandtab
 set shiftwidth=4
 set smartindent
-set wrap
+set nowrap
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir

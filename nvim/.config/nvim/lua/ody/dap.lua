@@ -1,4 +1,4 @@
-
+require('dap.ext.vscode').load_launchjs()
 local dap = require("dap")
 
 -- Mappings.
@@ -21,9 +21,6 @@ vim.keymap.set("n", "<leader>dK", [[<cmd>lua require"dap.ui.widgets".hover()<CR>
 vim.keymap.set("n", "<leader>dhh", [[<cmd>lua require"dap.ui.variables".hover()<CR>]])
 vim.keymap.set("n", "<leader>dhv", [[<cmd>lua require"dap.ui.variables".visual_hover()<CR>]])
 
-dap.listeners.after['event_initialized']['dapui_config'] = function()
-    dap.repl.open()
-end
 --vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
 
 -- This is similar to the one on top. I am leaving it here for reference.
@@ -39,13 +36,14 @@ dapui.setup({
             { id = "scopes", size = 0.25 },
             "watches",
             "stacks",
+            "repl",
           },
-          size = 90, -- 40 columns
+          size = 30, -- 40 columns
           position = "left",
         },
         {
           elements = {
-            "repl"
+            "console"
           },
           size = 0.25, -- 25% of total lines
           position = "bottom",
@@ -56,11 +54,15 @@ vim.keymap.set('n', '<M-k>', function() dapui.eval() end)
 vim.keymap.set('n', '<leader>oi', function() dapui.close() end)
 vim.keymap.set('n', '<leader>p', function() dapui.toggle() end)
 
+dap.listeners.after['event_initialized']['dapui_config'] = function()
+    --dap.repl.open()
+    dapui.open()
+end
 dap.listeners.before['event_terminated']['dapui_config'] = function()
-  dapui.close()
+  --dapui.close()
   --require("metals").restart_build()
 end
 dap.listeners.before['event_exited']['dapui_config'] = function()
-  dapui.close()
+  --dapui.close()
   --require("metals").restart_build()
 end
