@@ -34,6 +34,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'williamboman/mason.nvim'
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'simrat39/symbols-outline.nvim'
+    Plug 'nvim-telescope/telescope-live-grep-args.nvim'
+
     
 call plug#end()
 

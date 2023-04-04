@@ -2,7 +2,6 @@
 
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files({layout_strategy='vertical'})<CR>
-nnoremap <C-h> <cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>
 nnoremap <C-f> <cmd>lua require('telescope.builtin').find_files({layout_strategy='vertical'})<CR>
 nnoremap <M-up> <cmd>lua require('telescope.builtin').buffers({layout_strategy='vertical'})<CR>
 
@@ -18,3 +17,13 @@ nnoremap <leader>fc <cmd>lua require('telescope.builtin').lsp_incoming_calls({la
 nnoremap <leader>fo <cmd>lua require('telescope.builtin').lsp_outgoing_calls({layout_strategy='vertical'})<CR>
 nnoremap <M-F3> <cmd>lua require('telescope.builtin').lsp_implementations({layout_strategy='vertical'})<CR>
 nnoremap <leader>fx <cmd>lua require('telescope.builtin').diagnostics({layout_strategy='vertical', bufnr=0})<CR>
+
+" Live Grep is replaced with Live Grep Args. 
+" Usage: 
+" > "search_string" -t xml (to search in XML files)
+" > "search_string" -g folder/** (to search in some folder) 
+" TODO: find a faster way - this is so verbose
+"
+"nnoremap <C-h> <cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>
+nnoremap <C-h> <cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({layout_strategy='vertical'})<CR>
+
