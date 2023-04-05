@@ -9,11 +9,12 @@ require("nvim-tree").setup({
     filters = {
         dotfiles = false,
     },
-    on_attach = function()
-        local api = require('nvim-tree.api')
-        local function opts(desc)
-            return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-        end
-        vim.keymap.set('n', '<LeftRelease>', api.node.open.edit, opts("Open"))
-    end
+    -- TODO: this breaks <enter> open directory 
+    --on_attach = function()
+        --local api = require('nvim-tree.api')
+        --local function opts(desc)
+            --return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        --end
+        --vim.keymap.set('n', '<LeftRelease>', api.node.open.edit, opts("Open"))
+    --end
 })
