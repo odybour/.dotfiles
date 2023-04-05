@@ -1,7 +1,13 @@
-NVIM autoscroll dap repl:
+## nerd-font installation
 
-modify file:
-/home/ody/.config/nvim/plugged/nvim-dap/lua/dap
+Get the nerd font hack from here: https://www.nerdfonts.com/font-downloads  
 
-and put this code:
-https://github.com/mfussenegger/nvim-dap/pull/654/files
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hack.zip -O ~/Downloads
+
+unzip ~/Downloads/Hack.zip -d ~/.local/share/fonts/hack/
+fc-cache -vf
+fc-match Hack -a | grep -i hack
+
+logout
+
+edit konsole profile settings and select hack nomo NF font (kati tetoio) - oxi to koino hack font.

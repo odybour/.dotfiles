@@ -14,8 +14,10 @@
 #export HIVE_HOME=~/tools/apache-hive-2.3.9-bin
 export JAVA_HOME=/usr/lib/jvm/default
 export METALS_HOME=~/.local/share/coursier/bin
+export TOOLS_HOME=~/programming/aux/tools/bin
+export KARAF_HOME=~/tools/apache-karaf-4.3.9
 
-export PATH=$PATH:/home/bournas/.local/bin:/home/ody/tools:${METALS_HOME}
+export PATH=$PATH:/home/bournas/.local/bin:/home/ody/tools:${METALS_HOME}:/home/bournas/programming/nokia/ee-environment/boxes/common-box:$TOOLS_HOME:$KARAF_HOME/bin
 
 # IMPORTANT: modify also the keyboard settings from KDE UI according to these values.
 # Increase key speed via a rate change
