@@ -8,7 +8,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'junegunn/gv.vim'
-    "Plug 'preservim/nerdtree'
+    Plug 'preservim/nerdtree'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'nvim-lua/plenary.nvim'
@@ -24,7 +24,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'onsails/lspkind-nvim'
     Plug 'hrsh7th/vim-vsnip'
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
-    Plug 'nvim-tree/nvim-tree.lua'
+    "Plug 'nvim-tree/nvim-tree.lua'
     " Required by lspsaga -- START:
     Plug 'nvim-tree/nvim-web-devicons'
     Plug 'nvim-treesitter/nvim-treesitter'

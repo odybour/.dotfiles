@@ -52,7 +52,6 @@ local config = {
     },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        --vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting)
         require('ody.lsp').on_attach(client, bufnr, {
             server_side_fuzzy_completion = true,
         })
@@ -104,9 +103,25 @@ local config = {
     --vim.keymap.set('v', "<space>em", [[<ESC><CMD>lua require('jdtls').extract_method(true)<CR>,
     --{ noremap=true, silent=true, buffer=bufnr, desc = "Extract method" })
     --end
-    root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
+    root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw', 'pom.xml' }, { upward = true })[1]),
+    -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line
     settings = {
         java = {
+            eclipse = {
+                downloadSources = true
+            },
+            maven = {
+                downloadSources = true
+            },
+            implementationsCodeLens = {
+                enabled = true,
+            },
+            referencesCodeLens = {
+                enabled = true,
+            },
+            references = {
+                includeDecompiledSources = true,
+            },
             format = {
                 settings = {
                     -- Use ANV Java style guidelines for formatting
@@ -165,7 +180,8 @@ local config = {
                         name = "JavaSE-17",
                         path = "/usr/lib/jvm/java-17-openjdk-amd64"
                     }
-                }
+                },
+                updateBuildConfiguration = "interactive",
             },
         },
     },
@@ -174,13 +190,13 @@ local config = {
     }
 }
 --require "dap".configurations.java = {
-    --{
-        --type = 'java',
-        --request = 'attach',
-        --name = "Debug (Attach) - Remote",
-        --hostName = "127.0.0.1",
-        --port = 8000,
-    --},
+--{
+--type = 'java',
+--request = 'attach',
+--name = "Debug (Attach) - Remote",
+--hostName = "127.0.0.1",
+--port = 8000,
+--},
 --}
 
 require('jdtls').start_or_attach(config)
