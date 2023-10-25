@@ -175,11 +175,12 @@ local config = {
                     {
                         name = "JavaSE-11",
                         path = "/java/jdk-11",
-                    },
-                    {
-                        name = "JavaSE-17",
-                        path = "/usr/lib/jvm/java-17-openjdk-amd64"
                     }
+                    --,
+                    --{
+                        --name = "JavaSE-17",
+                        --path = "/usr/lib/jvm/java-17-openjdk-amd64"
+                    --}
                 },
                 updateBuildConfiguration = "interactive",
             },

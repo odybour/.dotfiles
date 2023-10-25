@@ -17,6 +17,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'scalameta/nvim-metals'
     Plug 'mfussenegger/nvim-jdtls'
     Plug 'mfussenegger/nvim-dap'
+    Plug 'rcarriga/cmp-dap'
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
@@ -35,6 +36,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'simrat39/symbols-outline.nvim'
     Plug 'nvim-telescope/telescope-live-grep-args.nvim'
+    Plug 'nvim-telescope/telescope-dap.nvim'
 
     
 call plug#end()

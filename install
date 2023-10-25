@@ -6,7 +6,8 @@ DOTFILES=$HOME/programming/aux/.dotfiles
 cd $DOTFILES
 
 # load stow folders
-STOW_FOLDERS=("bash" "i3" "nvim" "tmux" "bin" "alacritty" "picom")
+#STOW_FOLDERS=("bash" "i3" "nvim" "tmux" "bin" "alacritty" "picom")
+STOW_FOLDERS=("nvim" "tmux" "bin")
 
 # Installing all dotfiles
 for folder in ${STOW_FOLDERS[@]}; do
