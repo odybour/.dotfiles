@@ -1,0 +1,23 @@
+# pack-refs with: peeled fully-peeled sorted 
+f898e407b5e90d61d4af876c3dbecb4de0aa70d5 refs/remotes/origin/01-init.lua
+490cce39a6ac19fcbdf3710828dc5b81ae4362a0 refs/remotes/origin/02-lsp
+4de55b8bff88495876daa7f37462d290bd33c79e refs/remotes/origin/03-ui
+824022c49b11b38a3119b488e1d6eb630cb45a15 refs/remotes/origin/04-test
+7ea48551ff01b2332b4f6802d0436e2ee5d6db06 refs/remotes/origin/05-ide
+c1b28fab70bf0069cc456fc024a4e592d217f9d2 refs/remotes/origin/06-coding
+1f32129ce803239775c2de2dbc824e0190707798 refs/remotes/origin/07-pde
+3c5e492a527bf3cc7df228a47918d5a7f7d818ac refs/remotes/origin/08-pde2
+75bc3ddeb6990877f5702bee8248419ae5e2b31f refs/remotes/origin/09-menu
+afbf358df9192394887f838275ccfb4f5a93ff3f refs/remotes/origin/10-pde3
+5deeabaca20ea7d5f8f6ed8e5e1523993bab3e9c refs/remotes/origin/11-recipes
+795be32e97f4f3f7ec3295a7df6894bf2bc582e7 refs/remotes/origin/12-ai
+79a2694b9539ed83001b5bf20e8ff9e73b84916b refs/remotes/origin/13-hacks
+821315e14397b9d5a6146cb6a22ac37f6d24ca98 refs/remotes/origin/14-ai2
+915e3b306195ecc76690eaefb07405b2b2b362e7 refs/remotes/origin/15-ai3
+74c7a6a9b9fd990c74e3eb733ec49477f3bfc955 refs/remotes/origin/16-ui
+5b3c2cb568310f260538ffba1b7770dfb6e0b46e refs/remotes/origin/17-plugins
+fe5a0d057d7dd0ae34febaeedda0eec2ee7682b3 refs/remotes/origin/18-plugins-2
+a622e0ff7e16a611f596ce547f0aa5b5a412610b refs/remotes/origin/19-plugins-3
+1f056057afc776b8f4b3df817b823ccdc017fc35 refs/remotes/origin/20-plugins-4
+708e99cec8627170edb0508b3cfc77334eea8b6f refs/remotes/origin/21-plugins-5
+6f81337311b24e4d5af4c056c03b7e265cb268dd refs/remotes/origin/main
