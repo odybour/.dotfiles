@@ -1,9 +1,10 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  enabled = false,
-  cmd = { "NvimTreeToggle" },
+  enabled = true,
+  cmd = { "NvimTreeToggle", "NvimTreeFindFile" },
   keys = {
-    { "<leader>fe", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
+    { "<M-1>", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
+    { "<C-n>", "<cmd>NvimTreeFindFile<cr>", desc = "Find-File" },
   },
   opts = {
     disable_netrw = false,
