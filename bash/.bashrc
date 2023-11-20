@@ -40,6 +40,11 @@ bind -x '"\C-f":tmux-sessionizer'
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# https://neovim.io/doc/user/starting.html 
+# this tells nvim to find the configuration in ~/.config/modern-neovim and NOT ~/.config/nvim which is the default one.
+# the ~/.config/modern-neovim is copied with stow
+export NVIM_APPNAME=modern-neovim
+
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # required by anvgit

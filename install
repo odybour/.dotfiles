@@ -18,8 +18,8 @@ for folder in ${STOW_FOLDERS[@]}; do
 done
 echo Done!
 
-sudo ln -fs $HOME/.config/modern-neovim/mnv.sh /usr/bin/vi
-sudo ln -fs $HOME/home/bournas/.config/modern-neovim/mnv.sh /usr/bin/vim
+sudo ln -fs /usr/bin/nvim /usr/bin/vi
+sudo ln -fs /usr/bin/nvim /usr/bin/vim
 
 # come back to the previous working dir
 cd -
