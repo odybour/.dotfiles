@@ -36,3 +36,12 @@ source /usr/share/fzf/completion.bash
 bind -x '"\C-f":tmux-sessionizer'
 
 #source '/home/bournas/lib/azure-cli/az.completion'
+
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# required by anvgit
+export realuser=bournas
+export cloudName=OHN64

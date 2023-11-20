@@ -8,6 +8,8 @@
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# NOTE: To apply configuration execute: i3-msg restart
 
 set $mod Mod4
 
@@ -93,7 +95,7 @@ bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+#bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
@@ -123,6 +125,7 @@ set $ws10 "10"
 set $ws11 "11"
 set $ws12 "12"
 set $ws13 "13"
+set $ws14 "14"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -139,6 +142,7 @@ bindsym $mod+0 workspace number $ws10
 bindsym $mod+minus workspace number $ws11
 bindsym $mod+equal workspace number $ws12
 bindsym $mod+grave workspace number $ws13
+bindsym $mod+w workspace number $ws14
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -154,6 +158,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+minus move container to workspace number $ws11
 bindsym $mod+Shift+equal move container to workspace number $ws12
 bindsym $mod+Shift+grave move container to workspace number $ws13
+bindsym $mod+Shift+w move container to workspace number $ws14
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -198,8 +203,17 @@ bar {
 # You can get the class by executing `xprop` and clicking on the app, then look at WM_CLASS(STRING) value.
 # Also, you may need to get the second value, not the first one..
 for_window [class="Alacritty"] move container to workspace $ws13
-for_window [class="Google-chrome"] move container to workspace $ws1
-for_window [class="jetbrains-idea"] move container to workspace $ws2
+#assign [class="Alacritty"] $ws13
+#assign [class="Alacritty"] $ws1
+for_window [class="Google-chrome"] move container to workspace $ws2
+for_window [class="dolphin"] move container to workspace $ws3
+#for_window [class="jetbrains-idea"] move container to workspace $ws3
+for_window [class="jetbrains-idea" title="win0"] floating enable
+for_window [class="kronometer"] floating enable
+for_window [class="okular"] move container to workspace $ws4
+for_window [class="DBeaver"] move container to workspace $ws7
+for_window [class="Postman"] move container to workspace $ws8
+for_window [class="Wireshark"] move container to workspace $ws9
 for_window [class="Microsoft Teams - Preview"] move container to workspace $ws10
 # Find how to do this and have slack take the rest of the container space.
 # for_window [class="zoom"] resize set 640 0; move container to workspace $ws9
@@ -214,5 +228,7 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
 exec --no-startup-id i3-msg 'workspace 13; exec /usr/bin/alacritty'
-exec --no-startup-id i3-msg 'workspace 1; exec /usr/bin/google-chrome-stable'
-exec picom -b
+#exec --no-startup-id i3-msg 'workspace 1; exec /usr/bin/alacritty'
+exec --no-startup-id i3-msg 'workspace 2; exec /usr/bin/google-chrome-stable'
+# This does not work well with teams - share feature...
+#exec picom -b
