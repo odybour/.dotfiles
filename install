@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 set -e
 
-if [ ! -f "env" ]; then
+if [ ! -f "env/.dotfiles.env" ]; then
 	cp env/.dotfiles.env.template env/.dotfiles.env
 fi
 
