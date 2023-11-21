@@ -52,13 +52,14 @@ local function on_attach(client, bufnr, attach_opts)
     log.info('Client ' .. client.name .. ' capabilities = ' .. vim.json.encode(client.server_capabilities))
 
     local opts = { silent = true, buffer = bufnr }
-    for _, mappings in pairs(key_mappings) do
-        local capability, mode, lhs, rhs = unpack(mappings)
-        if client.server_capabilities[capability] then
-            log.info('Configuring capability for client ' .. client.name .. ': ' .. capability)
-            vim.keymap.set(mode, lhs, rhs, opts)
-        end
-    end
+    --TODO - there is a bug here:
+    --for _, mappings in pairs(key_mappings) do
+        --local capability, mode, lhs, rhs = unpack(mappings)
+        --if client.server_capabilities[capability] then
+            --log.info('Configuring capability for client ' .. client.name .. ': ' .. capability)
+            --vim.keymap.set(mode, lhs, rhs, opts)
+        --end
+    --end
 
     if vim.lsp.codelens and client.server_capabilities['codeLensProvider'] then
         log.info('Configuring capability for client ' .. client.name .. ': codeLensProvider')
@@ -169,18 +170,20 @@ end
 --
 M.on_attach = on_attach
 
+local servers = { 'tsserver', 'pyright', 'dockerls', 'lemminx', 'jsonls', 'eslint', 'html', 'perlls',
+    'robotframework_ls', 'sqlls', 'lua_ls' }
+
 -- makes sure the language servers configured later with lspconfig are
 -- actually available, and install them automatically if they're not
 -- !! THIS MUST BE CALLED BEFORE ANY LANGUAGE SERVER CONFIGURATION
 require("mason").setup()
 require("mason-lspconfig").setup {
     -- automatically install language servers setup below for lspconfig - uncomment to use
+    --ensure_installed = servers
     automatic_installation = false
 }
 
 local lspConfig = require('lspconfig')
-local servers = { 'tsserver', 'pyright', 'dockerls', 'lemminx', 'jsonls', 'eslint', 'html', 'perlls',
-    'robotframework_ls', 'sqlls', 'lua_ls' }
 
 -- a quick way to setup multiple servers. don't use this if you want to provide specific settings
 for _, server in ipairs(servers) do
