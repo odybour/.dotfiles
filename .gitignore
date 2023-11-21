@@ -1,3 +1,5 @@
+bash/.dotfiles.env.template
+
 .idea
 plugged
 *.iml
