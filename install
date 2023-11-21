@@ -2,10 +2,10 @@
 set -e
 
 if [ ! -f "env" ]; then
-	cp bash/.dotfiles.env.template bash/.dotfiles.env
+	cp env/.dotfiles.env.template env/.dotfiles.env
 fi
 
-source bash/.dotfiles.env
+source env/.dotfiles.env
 
 # go to DOTFILES folder
 cd $DOTFILES
