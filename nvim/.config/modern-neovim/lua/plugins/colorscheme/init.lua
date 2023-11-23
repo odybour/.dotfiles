@@ -1,12 +1,13 @@
 return {
   {
+    -- used to configure different color schemes per file type
     "folke/styler.nvim",
     enabled = false,
     event = "VeryLazy",
     opts = {
       themes = {
-        markdown = { colorscheme = "tokyonight" },
-        help = { colorscheme = "tokyonight" },
+        markdown = { colorscheme = "gruvbox" },
+        help = { colorscheme = "gruvbox" },
       },
     },
   },
