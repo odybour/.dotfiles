@@ -106,4 +106,75 @@ It showed the comment.nvim plugin is used for this key mapping. Then I went to h
 and found out the settings to use to change the key mapping. just configure these in opts, and will be passed to the startup function of the module.
 : 
 
+### nvim-tree
+
+migration guide (this is how I found out that all g:... variables are now provided as setup options - because in internet I was reading configuration that I could not find in docs..)
+
+  https://github.com/nvim-tree/nvim-tree.lua/issues/674
+
+and the docs:
+
+  https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
+
+execute this for keymappings
+
+: g?
+
+nvim-tree mappings                exit: q
+                   sort by description: s
+ <2-LeftMouse>  Open                     
+ <2-RightMouse> CD                       
+ <C-]>          CD                       
+ <C-E>          Open: In Place           
+ <C-K>          Info                     
+ <C-R>          Rename: Omit Filename    
+ <C-T>          Open: New Tab            
+ <C-V>          Open: Vertical Split     
+ <C-X>          Open: Horizontal Split   
+ <BS>           Close Directory          
+ <CR>           Open                     
+ <Tab>          Open Preview             
+ -              Up                       
+ .              Run Command              
+ >              Next Sibling             
+ <              Previous Sibling         
+ B              Toggle Filter: No Buffer 
+ C              Toggle Filter: Git Clean 
+ D              Trash                    
+ E              Expand All               
+ F              Clean Filter             
+ H              Toggle Filter: Dotfiles  
+ I              Toggle Filter: Git Ignore
+ J              Last Sibling             
+ K              First Sibling            
+ O              Open: No Window Picker   
+ P              Parent Directory         
+ R              Refresh                  
+ S              Search                   
+ U              Toggle Filter: Hidden    
+ W              Collapse                 
+ Y              Copy Relative Path       
+ a              Create File Or Directory 
+ bd             Delete Bookmarked        
+ bmv            Move Bookmarked          
+ bt             Trash Bookmarked         
+ ]c             Next Git                 
+ [c             Prev Git                 
+ c              Copy                     
+ d              Delete                   
+ e              Rename: Basename         
+ [e             Prev Diagnostic          
+ ]e             Next Diagnostic          
+ f              Filter                   
+ g?             Help                     
+ gy             Copy Absolute Path       
+ m              Toggle Bookmark          
+ o              Open                     
+ p              Paste                    
+ q              Close                    
+ r              Rename                   
+ s              Run System               
+ u              Rename: Full Path        
+ x              Cut                      
+ y              Copy Name                
 ### Logging

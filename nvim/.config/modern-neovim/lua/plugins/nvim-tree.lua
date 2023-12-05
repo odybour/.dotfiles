@@ -15,7 +15,11 @@ return {
       relativenumber = true,
     },
     filters = {
-      custom = { ".git" },
+      -- show .dotfiles and .gitignore files
+      git_ignored = false,
+      dotfiles = false,
+      git_clean = false,
+      no_buffer = false,
     },
     sync_root_with_cwd = true,
     update_focused_file = {
@@ -27,6 +31,11 @@ return {
         quit_on_open = false,
         resize_window = false,
       },
+    },
+    -- groups empty folders (e.g. java packages)
+    renderer = {
+      group_empty = true,
+      full_name = true,
     },
   },
 }
