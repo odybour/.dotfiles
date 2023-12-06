@@ -43,7 +43,7 @@ return {
         "vimdoc",
         "yaml",
       },
-      highlight = { enable = true, additional_vim_regex_highlighting = { "org", "markdown" } },
+      highlight = { enable = false, additional_vim_regex_highlighting = { "org", "markdown" } },
       indent = { enable = true },
       incremental_selection = {
         enable = true,

@@ -14,6 +14,16 @@ edit konsole profile settings and select hack nomo NF font (kati tetoio) - oxi t
 
 # Neovim
 
+## Structure
+
+We configure lazy.nvim to manage all plugins under the lua/plugins folder.
+
+lazy.nvim makes it very easy and flexible to configure plugins. For our configuration:
+
+* For common plugins (e.g., plenary.nvim, nui.nvim, nvim-web-devicons, dressing.nvim, etc), we use the plugins/init.lua file.
+* For plugins that do not need many configurations (e.g., dial.nvim, numb.nvim, neogit, diffview.nvim, etc), we use the plugins/init.lua file.
+* Plugins that require more configurations will have their own configuration files, e.g. WhichKey, Telescope, and Tree-sitter.
+* For similar plugins that require more configurations, e.g. LSP, and color schemes, they will have their own folders.
 ## Plugin Mgmt
 
 In file config/lazy.lua:
@@ -177,4 +187,25 @@ nvim-tree mappings                exit: q
  u              Rename: Full Path        
  x              Cut                      
  y              Copy Name                
+
+### ColorSchemes
+
+Plugins configured in file `lua/plugins/colorscheme/init.lua`
+
+You can enable the plugins by setting 
+lazy = false (so that it is not lazy loaded - when referenced by a required, but at startup)
+enabled = true (to enable this)
+
+I decided to use 
+https://github.com/sainnhe/gruvbox-material/blob/master/README.module
+
+with mix (or original) color paletter as defined in the docs.
+
+The docs:
+
+https://github.com/sainnhe/gruvbox-material/blob/master/doc/gruvbox-material.txt
+
+say you have to configure the palette using a global parameter. I added this in `config/options.lua`.
+
 ### Logging
+

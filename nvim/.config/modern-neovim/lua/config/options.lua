@@ -57,3 +57,6 @@ vim.g.markdown_recommended_style = 0
 
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.g.auto_save = 1
+
+-- required by sainnhe/gruvbox-material color plugin, to select color palette 
+vim.g.gruvbox_material_foreground="mixed"
