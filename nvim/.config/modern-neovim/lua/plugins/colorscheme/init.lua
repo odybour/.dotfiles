@@ -6,8 +6,7 @@ return {
     event = "VeryLazy",
     opts = {
       themes = {
-        markdown = { colorscheme = "gruvbox" },
-        help = { colorscheme = "gruvbox" },
+        -- I use gruvbox-material everywhere..
       },
     },
   },
