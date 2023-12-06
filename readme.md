@@ -18,7 +18,7 @@ Edit Konsole profile settings and select "hack nomo NF font" (κάτι τέτο�
 
 # Neovim Configuration
 
-## Structure
+## Structure - Plugins
 
 Configure `lazy.nvim` to manage all plugins under the `lua/plugins` folder.
 
@@ -29,7 +29,12 @@ Configure `lazy.nvim` to manage all plugins under the `lua/plugins` folder.
 - Plugins that require more configurations will have their own configuration files, e.g. WhichKey, Telescope, and Tree-sitter.
 - For similar plugins that require more configurations, e.g. LSP, and color schemes, they will have their own folders.
 
-## Plugin Management
+Every `*.lua` file in `lua/plugins/` is automatically sourced!
+Actually it appears that everything is sourced, all `init.lua` files even if they are contained in separate folders. that's lazy :-)
+
+There is a plugin management section here: <https://alpha2phi.medium.com/modern-neovim-init-lua-ab1220e3ecc1>
+
+### Plugin Management
 
 In file `config/lazy.lua`:
 
