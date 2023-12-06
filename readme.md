@@ -209,3 +209,141 @@ say you have to configure the palette using a global parameter. I added this in 
 
 ### Logging
 
+### LSP
+
+in configuration of lazy vim (lazy.lua), we import all plugin specs contained in folders plugins and pde.
+The pde folder contains many LSP configurations for different languages.
+They will be fetched by using the config.pde lua table, contained in config/init.lua file. check this:
+
+if not require("config").pde.docker then
+  return {}
+end
+
+return {
+  {
+   .... load docker lsp settings 
+  actually this  contains docker specific configurations for many plugins. somehow they are all merged together
+  }
+}
+
+if you execute :LspInfo you see the installed language servers. These come from servers defined in pde plugin folder, as well as 
+in lsp.opts.servers (plugins/lsp/init.lua file).
+
+
+i added bashls in lsp/init.lua, opt.servers and appears to work. don't swear.
+### init.lua
+
+Used by neovim, as opposed to init.vim.
+
+A folder containing an init.lua file can be required directly, without having to specify the name of the file.
+
+require('other_modules') -- loads other_modules/init.lua
+
+
+### lazy.lua
+
+The require("lazy").setup 
+
+is where the magic happens. This starts up lazy nvim. 
+
+Now, the setup() function can be either:
+  require("lazy").setup(plugins, opts)
+or
+  require("lazy").setup opts
+
+we use the second version, where the plugin specs (see https://github.com/folke/lazy.nvim#-plugin-spec) are passed to lazy vim via the config.spec parameter, which is actually a lua table.
+
+doc says that the default is :
+
+  -- leave nil when passing the spec as the first argument to setup()
+  spec = nil, ---@type LazySpec
+
+
+but we instead use:
+  spec = {
+    { import = "plugins" },
+    { import = "plugins.ui" },
+    { import = "plugins.notes" },
+    { import = "plugins.ai" },
+    { import = "pde" },
+  },
+
+check: https://github.com/folke/lazy.nvim#%EF%B8%8F-configuration
+
+### Lua tables
+Example 1: Creating and Accessing Tables
+lua
+Copy code
+-- Creating a simple table
+local fruits = {"Apple", "Banana", "Orange"}
+
+-- Accessing elements in the table
+print(fruits[1])  -- Output: Apple
+print(fruits[2])  -- Output: Banana
+print(fruits[3])  -- Output: Orange
+
+-- Adding a new element
+fruits[4] = "Grapes"
+
+-- Iterating through the table
+for i, fruit in ipairs(fruits) do
+    print(i, fruit)
+end
+Example 2: Table with Mixed Types
+lua
+Copy code
+-- Creating a table with mixed types
+local person = {
+    name = "John",
+    age = 30,
+    isStudent = true,
+    grades = {90, 85, 92},
+}
+
+-- Accessing elements
+print(person.name)         -- Output: John
+print(person.age)          -- Output: 30
+print(person.isStudent)    -- Output: true
+print(person.grades[1])     -- Output: 90
+
+-- Modifying a value
+person.age = 31
+
+-- Adding a new key-value pair
+person.gender = "Male"
+Example 3: Table as a Dictionary
+lua
+Copy code
+-- Creating a table as a dictionary
+local car = {
+    model = "Toyota",
+    year = 2020,
+    color = "Blue",
+}
+
+-- Accessing elements
+print(car.model)   -- Output: Toyota
+print(car.year)    -- Output: 2020
+print(car.color)   -- Output: Blue
+
+-- Modifying a value
+car.year = 2022
+
+-- Removing a key-value pair
+car.color = nil
+Example 4: Nested Tables
+lua
+Copy code
+-- Creating nested tables
+local matrix = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9},
+}
+
+-- Accessing elements in a nested table
+print(matrix[2][3])  -- Output: 6
+
+-- Modifying a value
+matrix[1][1] = 0
+These examples demonstrate some of the basic ways Lua tables can be used, including simple arrays, dictionaries, mixed-type tables, and nested tables. Lua tables are quite flexible and can be adapted to various data structures and use cases.
