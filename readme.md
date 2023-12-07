@@ -64,6 +64,12 @@ Examples:
         callback = function()
             print
 
+###
+
+I have created autocommands for processing VimEnter event and 
+1. opening nvim tree
+2. add folding arrows (using ufo module)
+
 ### Auto-format
 
 In `plugins/lsp/format.lua`, there is this autocmd:
@@ -339,3 +345,17 @@ Check: [lazy.nvim Configuration](https://github.com/folke/lazy.nvim#%EF%B8%8F-co
     matrix[1][1] = 0
 
 These examples demonstrate some of the basic ways Lua tables can be used, including simple arrays, dictionaries, mixed-type tables, and nested tables. Lua tables are quite flexible and can be adapted to various data structures and use cases.
+
+### Completion
+
+This is achieved using the following two plugins:
+
+* "hrsh7th/nvim-cmp",
+* "L3MON4D3/LuaSnip",
+
+These include a `config` function. According to the plugin spec this is executed when the plugin loads and if not specified, it defaults to `require("plugin_name").setup()`.
+
+usually, each plugin has an 
+* opts function (that retrieves a table with all options when evaluated.)
+* a config function that gets the opts as input.
+
