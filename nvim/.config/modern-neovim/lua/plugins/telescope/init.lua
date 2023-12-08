@@ -1,3 +1,4 @@
+-- https://github.com/nvim-telescope/telescope.nvim/blob/master/doc/telescope.txt
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -28,6 +29,7 @@ return {
     -- stylua: ignore
     keys = {
       { "<leader><space>", require("utils").find_files, desc = "Find Files" },
+      -- if current working directory contains .git, executes Git Files, otherwise Find Files
       { "<leader>ff", require("utils").telescope("files"), desc = "Find Files (Root Dir)" },
       { "<leader>fF", require("utils").telescope("files", { cwd = false }), desc = "Find Files (Cwd)" },
       { "<leader>gf", require("plugins.telescope.pickers").git_diff_picker, desc = "Diff Files" },
@@ -238,6 +240,7 @@ return {
           git_files = {
             theme = "dropdown",
             previewer = false,
+            hidden = true,
           },
           buffers = {
             theme = "dropdown",
@@ -250,6 +253,10 @@ return {
                 ["<c-l>"] = custom_pickers.actions.set_folders,
               },
             },
+            -- additional arguments passed to rg
+            additional_args = function()
+              return { "--hidden", "-g", "!.git" }
+            end,
           },
         },
         extensions = {

@@ -81,3 +81,8 @@ keymap("n", "i", function()
     return "i"
   end
 end, { expr = true })
+
+-- previous / next buffer keymap alias
+keymap("n", "<M-left>", "<C-o>")
+keymap("n", "<M-right>", "<C-i>")
+

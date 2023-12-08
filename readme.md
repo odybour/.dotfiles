@@ -66,7 +66,8 @@ Examples:
 
 ###
 
-I have created autocommands for processing VimEnter event and 
+I have created autocommands for processing VimEnter event and
+
 1. opening nvim tree
 2. add folding arrows (using ufo module)
 
@@ -228,6 +229,92 @@ If you execute `:LspInfo`, you see the installed language servers. These come fr
 
 I added `bashls` in `lsp/init.lua`, `opt.servers` and it appears to work. Don't swear.
 
+#### Plugins
+
+so many plugins involved..
+
+    "neovim/nvim-lspconfig", important
+    "williamboman/mason.nvim", important
+    "utilyre/barbecue.nvim", not used - lspsaga instead
+    "folke/trouble.nvim",
+    "nvimdev/lspsaga.nvim",
+    "Bekaboo/dropbar.nvim",
+    "nvimtools/none-ls.nvim", important
+    "jay-babu/mason-null-ls.nvim"
+    "stevearc/conform.nvim", not used
+    "mfussenegger/nvim-lint", not used
+    "dnlhc/glance.nvim", not used
+    "luckasRanarison/clear-action.nvim", not used
+
+`nvim-lspconfig` plugin is lazy-loaded on events BufReadPre, BufNewFile.
+events fired on edit of new or existing file.
+
+I guess this is how it attaches the language server on file open.
+
+most important line:
+
+      require("plugins.lsp.servers").setup(plugin, opts)
+
+this calls the `setup()` function of `servers.lua` file. (more on that below)
+
+Mason:
+
+it is lazy loaded when the command Mason is executed. (cmd plugin option)
+-> this opens a graphical status window
+
+From there, you can see installed packages and update them too!
+
+it executes MasonUpdate when the plugin is updated
+-> this updates all managed registries
+
+    build = ":MasonUpdate", - not sure what it does.
+    cmd = "Mason",
+
+on load, it isntalls the shfmt only - some formatting package in ensure_installed lua table.
+
+LSP features:
+
+- Code actions
+
+- Diagnostics (file- and project-level)
+
+- Formatting (including range formatting)
+
+- Hover
+
+- Completion
+
+The none-ls (aka null-ls) provides a way for non-LSP sources to hook into its LSP client.
+It is unique because it doesn't come with its own language server. Instead, it acts as a connector between Neovim and various external programs or scripts that perform language-specific tasks. These external programs are referred to as "sources" in the context of Null-ls.
+
+Null-ls aims to provide language server capabilities without the need to run a separate language server for each supported language. It allows you to use existing tools or scripts that fulfill specific language server functionalities.
+
+You can use Null-ls with different sources, which means you can integrate it with various tools or scripts that suit your workflow. This makes it highly customizable and adaptable to different programming languages or projects.
+
+ok, but in sources I see only
+
+nls.builtins.formatting.shfmt,
+
+and this is also provided by Mason (in ensure_installed). good, but what about all other programming languages?
+
+well. there is mason-lspconfig declared as a dependency in lspconfig.
+and this is used in servers.lua file right in the setup() function.
+
+#### servers.setup function
+
+this function registers a callback to LspAttach event that is triggered when an LspClient attaches to a buffer.
+
+So, you open a file, the lsp client gets attached and then an on_attach function is executed to do the
+required processing:
+
+- set formatters
+- configure keymaps
+
+foreach server, (configued in lspconfig, contained in pde plugin folder too, that during loading of the pluginsextend the servers table of the lspconfig plugin).
+
+the code checks all registrered mason lsp servers and if it does not find an entry for the one being iterated,
+it installs this and calls setup. i think. more after debugging this. how to debug lua ?
+
 ### init.lua
 
 Used by neovim, as opposed to `init.vim`.
@@ -350,12 +437,40 @@ These examples demonstrate some of the basic ways Lua tables can be used, includ
 
 This is achieved using the following two plugins:
 
-* "hrsh7th/nvim-cmp",
-* "L3MON4D3/LuaSnip",
+- "hrsh7th/nvim-cmp",
+- "L3MON4D3/LuaSnip",
 
 These include a `config` function. According to the plugin spec this is executed when the plugin loads and if not specified, it defaults to `require("plugin_name").setup()`.
 
-usually, each plugin has an 
-* opts function (that retrieves a table with all options when evaluated.)
-* a config function that gets the opts as input.
+usually, each plugin has an
 
+- opts function (that retrieves a table with all options when evaluated.)
+- a config function that gets the opts as input.
+
+The completion plugin is provided with sources, e.g.
+
+          { name = "nvim_lsp", group_index = 1, max_item_count = 15 },
+          { name = "codeium", group_index = 1 },
+          { name = "luasnip", group_index = 1, max_item_count = 8 },
+          { name = "buffer", group_index = 2 },
+          { name = "path", group_index = 2 },
+          { name = "git", group_index = 2 },
+          { name = "orgmode", group_index = 2 },
+
+there are ssoo many completion sources : https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
+
+### Telescope
+
+<https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes>
+
+i see:
+
+this is imlementated in `utils/init.lua`
+require("utils").telescope(...))
+
+implements recipees like:
+Falling back to find_files if git_files can't find a .git directory
+
+these two are telescope specific:
+require("function() require("telescope").extensions.live_grep_args.live_grep_args() end
+require("telescope.builtin").live_grep(
