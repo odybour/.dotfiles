@@ -1,0 +1,3 @@
+[submodule "nvim/.config/modern-neovim"]
+	path = nvim/.config/modern-neovim
+	url = git@github.com:odybour/modern-neovim.git
