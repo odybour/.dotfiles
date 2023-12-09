@@ -474,3 +474,9 @@ Falling back to find_files if git_files can't find a .git directory
 these two are telescope specific:
 require("function() require("telescope").extensions.live_grep_args.live_grep_args() end
 require("telescope.builtin").live_grep(
+
+### Logging 
+
+~/.local/state/modern-neovim
+~/.local/share/modern-neovim
+~/.cache/modern-neovim

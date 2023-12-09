@@ -19,8 +19,16 @@ for folder in ${STOW_FOLDERS[@]}; do
 done
 echo Done!
 
-sudo ln -fs /usr/bin/nvim /usr/bin/vi
-sudo ln -fs /usr/bin/nvim /usr/bin/vim
+# The java version is required by JDTLS
+# TODO I need to to something like this to not apply the JAVA_HOME globally!
+# nvim() {
+#   export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+#   /usr/bin/nvim "$@"
+# }
+echo "export JAVA_HOME=/usr/lib/jvm/jdk-17 && nvim" | sudo tee /usr/bin/vi
+sudo ln -fs /usr/bin/vi /usr/bin/vim
+sudo chmod +x /usr/bin/vi
+sudo chmod +x /usr/bin/vim
 
 # come back to the previous working dir
 cd -
