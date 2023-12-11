@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# The java version is required by JDTLS
+export JAVA_HOME=/usr/lib/jvm/jdk-17
+/usr/bin/nvim
