@@ -208,6 +208,16 @@ You can enable the plugins by setting
 
 I decided to use <https://github.com/sainnhe/gruvbox-material/blob/master/README.module>
 
+Useful commands:
+
+    Type :color to view current color-scheme.
+    Type :hi to list all color groups.
+    Type :hi Statement to view color definations for Statement. (change Statement to what you want)
+
+Semantic highlighting:
+
+<https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316>
+
 ### Logging
 
 ### LSP
