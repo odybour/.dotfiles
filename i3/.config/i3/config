@@ -212,6 +212,7 @@ for_window [class="jetbrains-idea" title="win0"] floating enable
 for_window [class="kronometer"] floating enable
 for_window [class="okular"] move container to workspace $ws4
 for_window [class="obs"] move container to workspace $ws5
+for_window [class="FileZilla"] move container to workspace $ws6
 for_window [class="DBeaver"] move container to workspace $ws7
 for_window [class="Postman"] move container to workspace $ws8
 for_window [class="Wireshark"] move container to workspace $ws9
