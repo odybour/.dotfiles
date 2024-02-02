@@ -216,6 +216,7 @@ for_window [class="FileZilla"] move container to workspace $ws6
 for_window [class="KeePass2"] move container to workspace $ws6
 for_window [class="DBeaver"] move container to workspace $ws7
 for_window [class="Postman"] move container to workspace $ws8
+for_window [class="Apache JMeter"] move container to workspace $ws8
 for_window [class="Wireshark"] move container to workspace $ws9
 for_window [class="Microsoft Teams - Preview"] move container to workspace $ws10
 # Find how to do this and have slack take the rest of the container space.
