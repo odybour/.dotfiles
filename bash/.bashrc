@@ -50,3 +50,5 @@ export NVIM_APPNAME=modern-neovim
 # required by anvgit
 export realuser=bournas
 export cloudName=OHN64
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
