@@ -51,4 +51,5 @@ export NVIM_APPNAME=modern-neovim
 export realuser=bournas
 export cloudName=OHN64
 
+export ARTIFACTORY_IP=artifactory-espoo-fnms.int.net.nokia.com
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
