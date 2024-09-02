@@ -24,8 +24,10 @@ fi
 
 
 source <(kubectl completion bash)
-#eval "$(pyenv init -)"
-#eval "$(pyenv virtualenv-init -)"
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
@@ -52,4 +54,8 @@ export realuser=bournas
 export cloudName=OHN64
 
 export ARTIFACTORY_IP=artifactory-espoo-fnms.int.net.nokia.com
+export CSL=bournas
+
+alias minikube-start='minikube start driver=none --extra-config=kubelet.serialize-image-pulls=false --kubernetes-version v1.24.7'
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
