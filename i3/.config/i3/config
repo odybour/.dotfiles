@@ -208,7 +208,7 @@ for_window [class="Alacritty"] move container to workspace $ws13
 for_window [class="Google-chrome"] move container to workspace $ws2
 for_window [class="dolphin"] move container to workspace $ws3
 #for_window [class="jetbrains-idea"] move container to workspace $ws3
-for_window [class="jetbrains-idea" title="win0"] floating enable
+# for_window [class="jetbrains-idea"] floating enable
 for_window [class="kronometer"] floating enable
 for_window [class="okular"] move container to workspace $ws4
 for_window [class="obs"] move container to workspace $ws5

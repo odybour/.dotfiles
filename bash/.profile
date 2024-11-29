@@ -18,6 +18,8 @@ export TOOLS_HOME=~/programming/aux/tools/bin
 export ALTIPLANO_TOOLS_DIR=~/programming/aux/altiplano-tools
 export ALTIPLANO_SCRIPTS_DIR=~/programming/aux/altiplano-scripts
 export KARAF_HOME=~/tools/apache-karaf-4.3.9
+export ARTIFACTORY_IP=artifactory-espoo-fnms.int.net.nokia.com
+export realuser=bournas
 
 export PATH=$PATH:/home/bournas/.local/bin:/home/ody/tools:${METALS_HOME}:/home/bournas/programming/nokia/ee-environment/boxes/common-box:$TOOLS_HOME:$KARAF_HOME/bin:$ALTIPLANO_TOOLS_DIR/bin:$ALTIPLANO_TOOLS_DIR/scripts:$ALTIPLANO_SCRIPTS_DIR/bin:$ALTIPLANO_SCRIPTS_DIR/scripts/0-dev-altiplano-installation:$ALTIPLANO_SCRIPTS_DIR/scripts/3-build-container
 

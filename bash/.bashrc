@@ -49,12 +49,14 @@ export NVIM_APPNAME=modern-neovim
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# required by anvgit
-export realuser=bournas
-export cloudName=OHN64
+# export JAVA_TOOL_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true --add-opens=java.base/com.sun.crypto.provider=ALL-UNNAMED"
 
-export ARTIFACTORY_IP=artifactory-espoo-fnms.int.net.nokia.com
-export CSL=bournas
+# required by anvgit
+# export cloudName=OHN64
+export cloudName=
+export CSL=$(whoami)
+export USER_ID=$(id -u)
+export realuser=$(whoami)
 
 alias minikube-start='minikube start driver=none --extra-config=kubelet.serialize-image-pulls=false --kubernetes-version v1.24.7'
 
