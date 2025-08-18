@@ -9,8 +9,8 @@
 ;[http]
     ;proxy = http://10.144.1.10:8080
 
-[url "ssh://gerrit-essl2.int.net.nokia.com:29418"]
-        insteadOf = ssh://gerrit.ext.net.nokia.com:29418
-[url "ssh://gerrit.ext.net.nokia.com:29418"]
-        pushInsteadOf = ssh://gerrit.ext.net.nokia.com:29418
-        pushInsteadOf = ssh://gerrit-essl2.int.net.nokia.com:29418
+; [url "ssh://gerrit-essl2.int.net.nokia.com:29418"]
+;         insteadOf = ssh://gerrit.ext.net.nokia.com:29418
+; [url "ssh://gerrit.ext.net.nokia.com:29418"]
+;         pushInsteadOf = ssh://gerrit.ext.net.nokia.com:29418
+;         pushInsteadOf = ssh://gerrit-essl2.int.net.nokia.com:29418

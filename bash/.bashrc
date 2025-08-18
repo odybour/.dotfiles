@@ -26,12 +26,14 @@ fi
 source <(kubectl completion bash)
 
 export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+eval "$(direnv hook bash)"
 
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
 
+# do i need these? i can do the source ./bin/activate myself
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 #eval "$(pyenv init -)"
 #eval "$(pyenv virtualenv-init -)"
 
@@ -61,3 +63,5 @@ export realuser=$(whoami)
 alias minikube-start='minikube start driver=none --extra-config=kubelet.serialize-image-pulls=false --kubernetes-version v1.24.7'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+

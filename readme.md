@@ -16,3 +16,11 @@ Get the Nerd Font Hack from [here](https://www.nerdfonts.com/font-downloads).
 
 Edit Konsole profile settings and select "hack nomo NF font" (κάτι τέτοιο) - not the common Hack font.
 
+
+# Bluetooth Headset Issues
+
+Telika ebala to pipewire kai ola ta sxetika packeta. pipewire-pulse, alsa etc de thumamai. des wiki.
+
+Mikrofwno de douleyeo apo to Bluetooth. tha prepei na allaksei to profile apo a2dp se hfp de thymamai. genika den to epsaksa kai para poly, alla thewrhtika ginetai me to pipewire kai ena allo tool , to wireplumber.
+
+exei poly pragma. gia thn wra akouw apo ta Bluetooth kai mikrowno aytomata pairnei mia allh phgh apo kalwdio. opote ok. 
