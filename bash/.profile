@@ -23,7 +23,7 @@ export realuser=bournas
 
 export PATH=$PATH:/home/bournas/.local/bin:/home/ody/tools:${METALS_HOME}:/home/bournas/programming/nokia/ee-environment/boxes/common-box:$TOOLS_HOME:$KARAF_HOME/bin:$ALTIPLANO_TOOLS_DIR/bin:$ALTIPLANO_TOOLS_DIR/scripts:$ALTIPLANO_SCRIPTS_DIR/bin:$ALTIPLANO_SCRIPTS_DIR/scripts/0-dev-altiplano-installation:$ALTIPLANO_SCRIPTS_DIR/scripts/3-build-container
 
-
+export QT_QPA_PLATFORM=wayland
 
 # IMPORTANT: modify also the keyboard settings from KDE UI according to these values.
 # Increase key speed via a rate change

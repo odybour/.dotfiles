@@ -254,6 +254,7 @@ for_window [app_id="Alacritty"] move container to workspace 13
 for_window [app_id="google-chrome"] move container to workspace 2
 for_window [class="jetbrains-idea"] floating enable, move to workspace 1
 for_window [class="Microsoft Teams - Preview"] floating enable, move to workspace 10
+for_window [app_id="com.obsproject.Studio"] move container to workspace 5
 
 exec google-chrome-stable
 exec intellij-idea-ultimate-edition
