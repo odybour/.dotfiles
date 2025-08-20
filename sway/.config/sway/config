@@ -265,13 +265,17 @@ for_window [app_id="google-chrome"] move container to workspace 2
 for_window [class="jetbrains-idea"] move to workspace 1
 for_window [class="Microsoft Teams - Preview"] floating enable, move to workspace 10
 for_window [app_id="com.obsproject.Studio"] move container to workspace 5
+for_window [app_id="flameshot"] floating enable, fullscreen disable, move absolute position 0 0, border pixel 0
 
 exec google-chrome-stable
 exec intellij-idea-ultimate-edition
 exec teams-proxy
 # Note: this starts the tmux session before sway, and i cannot run swaymsg commands (e.g. swaymsg reload)
 # to achieve this you need to exit tmux and start alacritty again. perhaps minor issue for now
-exec alacritty
+# exec alacritty
+
+# I need the QT_QPA_PLATFORM=xcb to use X11
+exec sh -c 'QT_QPA_PLATFORM=xcb flameshot'
 
 include /etc/sway/config.d/*
 
