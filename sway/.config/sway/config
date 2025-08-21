@@ -265,6 +265,8 @@ for_window [app_id="google-chrome"] move container to workspace 2
 for_window [class="jetbrains-idea"] move to workspace 1
 for_window [class="Microsoft Teams - Preview"] floating enable, move to workspace 10
 for_window [app_id="com.obsproject.Studio"] move container to workspace 5
+for_window [app_id="org.kde.kwrite"] move container to workspace 3
+for_window [app_id="thunar"] move container to workspace 3
 for_window [app_id="flameshot"] floating enable, fullscreen disable, move absolute position 0 0, border pixel 0
 
 exec google-chrome-stable
