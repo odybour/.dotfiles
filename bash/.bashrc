@@ -42,7 +42,7 @@ bind -x '"\C-f":tmux-sessionizer'
 #source '/home/bournas/lib/azure-cli/az.completion'
 
 #export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [-s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # https://neovim.io/doc/user/starting.html 
 # this tells nvim to find the configuration in ~/.config/modern-neovim and NOT ~/.config/nvim which is the default one.
@@ -57,11 +57,14 @@ export NVIM_APPNAME=modern-neovim
 # export cloudName=OHN64
 export cloudName=
 export CSL=$(whoami)
-export USER_ID=$(id -u)
+export HOST_UID=$(id -u)
+export HOST_GID=$(id -g)
 export realuser=$(whoami)
 
 alias minikube-start='minikube start driver=none --extra-config=kubelet.serialize-image-pulls=false --kubernetes-version v1.24.7'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-
+# if [ "$IS_CONTAINER" = "true" ]; then
+#     exec /bin/bash --rcfile ~/.bashrc_container
+# fi

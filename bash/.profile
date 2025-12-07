@@ -12,6 +12,8 @@
 
 #export HADOOP_HOME=~/tools/hadoop-3.2.2
 #export HIVE_HOME=~/tools/apache-hive-2.3.9-bin
+export NVIM_APPNAME=modern-neovim
+
 export JAVA_HOME=/usr/lib/jvm/default
 export METALS_HOME=~/.local/share/coursier/bin
 export TOOLS_HOME=~/programming/aux/tools/bin
@@ -20,8 +22,11 @@ export ALTIPLANO_SCRIPTS_DIR=~/programming/aux/altiplano-scripts
 export KARAF_HOME=~/tools/apache-karaf-4.3.9
 export ARTIFACTORY_IP=artifactory-espoo-fnms.int.net.nokia.com
 export realuser=bournas
+#export M2_HOME=/opt/apache-maven-3.9.11
+export M2_HOME=/opt/altiplano-maven
 
-export PATH=$PATH:/home/bournas/.local/bin:/home/ody/tools:${METALS_HOME}:/home/bournas/programming/nokia/ee-environment/boxes/common-box:$TOOLS_HOME:$KARAF_HOME/bin:$ALTIPLANO_TOOLS_DIR/bin:$ALTIPLANO_TOOLS_DIR/scripts:$ALTIPLANO_SCRIPTS_DIR/bin:$ALTIPLANO_SCRIPTS_DIR/scripts/0-dev-altiplano-installation:$ALTIPLANO_SCRIPTS_DIR/scripts/3-build-container
+export PATH=$M2_HOME/bin:$PATH:/home/bournas/.local/bin:/home/ody/tools:${METALS_HOME}:/home/bournas/programming/nokia/ee-environment/boxes/common-box:$TOOLS_HOME:$KARAF_HOME/bin:$ALTIPLANO_TOOLS_DIR/bin:$ALTIPLANO_TOOLS_DIR/scripts:$ALTIPLANO_SCRIPTS_DIR/bin:$ALTIPLANO_SCRIPTS_DIR/scripts/0-dev-altiplano-installation:$ALTIPLANO_SCRIPTS_DIR/scripts/3-build-container
+
 
 export QT_QPA_PLATFORM=wayland
 

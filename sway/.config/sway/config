@@ -1,3 +1,5 @@
+
+include /etc/sway/config.d/*
 # Default config for sway
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
@@ -26,8 +28,10 @@ output * bg /usr/share/wallpapers/Nexus/contents/images_dark/5120x2880.png fill
 # Example configuration:
 #
 # TIP: run wdisplays to get the correct values to put below (output name, resolution and position):
-output eDP-1 resolution 1920x1200 position 1920,0
-output HDMI-A-1 resolution 1920x1080 position 3840,0
+#output eDP-1 resolution 1920x1200 position 1920,0
+# output HDMI-A-1 resolution 1920x1080 position 3840,0
+#output DP-5 resolution 1920x1200 position 3840,0
+#output DP-7 resolution 1920x1080 position 5760,0
 
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -268,6 +272,7 @@ for_window [app_id="com.obsproject.Studio"] move container to workspace 5
 for_window [app_id="org.kde.kwrite"] move container to workspace 3
 for_window [app_id="thunar"] move container to workspace 3
 for_window [app_id="flameshot"] floating enable, fullscreen disable, move absolute position 0 0, border pixel 0
+for_window [app_id="code"] move container to workspace 1
 
 exec google-chrome-stable
 exec intellij-idea-ultimate-edition
@@ -278,8 +283,6 @@ exec teams-proxy
 
 # I need the QT_QPA_PLATFORM=xcb to use X11
 exec sh -c 'QT_QPA_PLATFORM=xcb flameshot'
-
-include /etc/sway/config.d/*
 
 # To exit sway and go back to Display Manager:
 # swaymsg exit
