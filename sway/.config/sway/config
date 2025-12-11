@@ -271,18 +271,16 @@ for_window [class="Microsoft Teams - Preview"] floating enable, move to workspac
 for_window [app_id="com.obsproject.Studio"] move container to workspace 5
 for_window [app_id="org.kde.kwrite"] move container to workspace 3
 for_window [app_id="thunar"] move container to workspace 3
-for_window [app_id="flameshot"] floating enable, fullscreen disable, move absolute position 0 0, border pixel 0
 for_window [app_id="code"] move container to workspace 1
 
 exec google-chrome-stable
 exec intellij-idea-ultimate-edition
 exec teams-proxy
+# exec screengrab
+
 # Note: this starts the tmux session before sway, and i cannot run swaymsg commands (e.g. swaymsg reload)
 # to achieve this you need to exit tmux and start alacritty again. perhaps minor issue for now
 # exec alacritty
-
-# I need the QT_QPA_PLATFORM=xcb to use X11
-exec sh -c 'QT_QPA_PLATFORM=xcb flameshot'
 
 # To exit sway and go back to Display Manager:
 # swaymsg exit

@@ -68,3 +68,6 @@ alias minikube-start='minikube start driver=none --extra-config=kubelet.serializ
 # if [ "$IS_CONTAINER" = "true" ]; then
 #     exec /bin/bash --rcfile ~/.bashrc_container
 # fi
+if [ "$IS_CONTAINER" = "true" ]; then
+    exec /bin/bash --rcfile ~/.bashrc_container
+fi
