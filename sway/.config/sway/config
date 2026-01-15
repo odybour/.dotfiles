@@ -274,7 +274,7 @@ for_window [app_id="thunar"] move container to workspace 3
 for_window [app_id="code"] move container to workspace 1
 
 exec google-chrome-stable
-exec intellij-idea-ultimate-edition
+exec code
 exec teams-proxy
 # exec screengrab
 
