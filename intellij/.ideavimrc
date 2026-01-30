@@ -1,0 +1,165 @@
+" .ideavimrc configuration file
+
+""" Editing and Reloading the Config -
+" Note: You MUST disable in settings->Editor->General the copy as rich text
+" Test: Copy from intellij, then execute in command line: wl-paste. You can also execute wl-paste --list-types to see what types are being advertised.
+" Note: It is possible some tools (e.g. kwrite) need type text/plain, which is not currently advertised by intellij for some reason, hence the paste there will not work.
+set clipboard+=unnamedplus
+set clipboard+=ideaput
+nnoremap e :e ~/.ideavimrc<CR>
+nnoremap r :action IdeaVim.ReloadVimRc.reload<CR>
+
+" Set leader key
+let mapleader = " "
+
+" https://github.com/JetBrains/ideavim/wiki/NERDTree-support
+" Enable NERDTree plugin support - makes project tree work with NERDTree shortcuts (e.g. k,j,etc)
+Plug 'preservim/nerdtree'
+
+" Remap NERDTree actions (requires IDEA restart)
+let g:NERDTreeMapNewFile = 'a'
+let g:NERDTreeMapNewDir = 'A'
+let g:NERDTreeMapActivateNode = 'l'
+
+" File operations
+set incsearch
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>fg :action FindInPath<CR>
+
+" Code Navigation
+nnoremap K :action ShowHoverInfo<CR>
+xnoremap K :action ShowHoverInfo<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gR :action FindUsages<CR>
+xnoremap gR :action FindUsages<CR>
+nnoremap gr :action ShowUsages<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gf :action GotoSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gb :action Back<CR>
+nnoremap gB :action Forward<CR>
+nnoremap go :action GotoSymbol<CR>
+
+nnoremap <leader>s :action GotoRelated<CR>
+
+" " Code actions
+set ideajoin
+set idearefactormode=keep
+
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseAllRegions<CR>
+nnoremap <leader>zo :action ExpandAllRegions<CR>
+
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+
+nnoremap <leader>re :action RenameElement<CR>
+nnoremap <leader>cs :action FileStructurePopup<CR>
+xnoremap <leader>cs :action FileStructurePopup<CR>
+
+nnoremap ge :action GotoNextError<CR>
+nnoremap gE :action GotoPreviousError<CR>
+
+" " Buffer/Editor management
+" nnoremap <leader>bd :action CloseContent<CR>
+" Map to show only open editor tabs (not recent files)
+nnoremap <leader>, :action RecentLocations<CR>
+nnoremap <leader>h :action LocalHistory.ShowHistory<CR>
+" nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+
+" Quick buffer-list fallback using IdeaVim's buffer list (:ls)
+" Press <leader>bb to see a Vim-style list of buffers and then use :bN to switch.
+nnoremap <leader>bb :ls<CR>
+
+" " Git
+" nnoremap <leader>gg :action ActivateVersionControlToolWindow<CR>
+
+" " Formatting
+nnoremap <leader>lf :action ReformatCode<CR>
+vnoremap <leader>lf :action ReformatCode<CR>
+
+" " Testing
+" nnoremap <leader>t :action RunClass<CR>
+" nnoremap <leader>dt :action DebugClass<CR>
+" nnoremap <leader>T :action Run<CR>
+" nnoremap <leader>dT :action Debug<CR>
+
+" " Debugging
+nnoremap <leader>b :action ToggleLineBreakpoint<CR>
+" nnoremap <leader>dq :action Stop<CR>
+
+" Navigation between splits
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+" nnoremap <A-w>h <C-w>h
+nnoremap <A-w>j <C-w>j
+nnoremap <A-w>k <C-w>k
+nnoremap <A-w>l <C-w>l
+
+" Additional split navigation shortcuts
+nnoremap <C-Tab> :action NextTab<CR>
+nnoremap <C-S-Tab> :action PreviousTab<CR>
+
+" Quick toggle between editor and last tool window
+nnoremap <A-w>h :action JumpToLastWindow<CR>
+
+" Hide tool window and focus editor
+"nnoremap <Esc><Esc> :action HideActiveWindow<CR>
+
+" Call hierarchy
+nnoremap <leader>gi :action CallHierarchy<CR>
+
+" " Quick fix
+" nnoremap <A-CR> :action ShowIntentionActions<CR>
+
+"nnoremap <Leader>en :action EditSourceInNewWindow<CR>
+"nnoremap <Leader>n :action NextWindow<CR>
+" nnoremap <Leader>n :action SelectInProjectView<CR>
+
+" " Enable line numbers
+set number
+set relativenumber
+
+nnoremap <Leader>q :action CloseContent<CR>
+nnoremap <Leader>qa :action CloseAllEditors<CR>
+
+
+" " Enable line numbers
+" set number
+" set relativenumber
+
+" " Enable search highlighting
+" set hlsearch
+" set incsearch
+" set ignorecase
+" set smartcase
+
+" " Enable clipboard integration
+" set clipboard+=unnamedplus
+" set clipboard+=ideaput
+
+" " Enable scrolloff
+" set scrolloff=5
+" set sidescrolloff=5
+
+" " Enable which-key timeout
+" set timeoutlen=1000
+
+" " Leader key
+" let mapleader = " "
+
+" " Common mappings
+" nnoremap <leader>w :w<CR>
+" nnoremap <leader>q :q<CR>
+
+" " IdeaVim specific actions
+" You can customize these based on your preferences
+" Examples:
+" nnoremap <leader>r :action Run<CR>
+" nnoremap <leader>d :action Debug<CR>
+" nnoremap <leader>f :action GotoFile<CR>
+" nnoremap <leader>g :action FindInPath<CR>

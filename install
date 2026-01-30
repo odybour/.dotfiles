@@ -19,8 +19,16 @@ for folder in ${STOW_FOLDERS[@]}; do
 done
 echo Done!
 
-sudo ln -fs ~/.local/bin/vi /usr/bin/vi
-sudo ln -fs /usr/bin/vi /usr/bin/vim
+# Create system-wide symlinks only if needed
+if [ ! -L "/usr/bin/vi" ] || [ "$(readlink /usr/bin/vi)" != "$HOME/.local/bin/vi" ]; then
+	echo "Creating symlink: /usr/bin/vi -> ~/.local/bin/vi"
+	sudo ln -fs ~/.local/bin/vi /usr/bin/vi
+fi
+
+if [ ! -L "/usr/bin/vim" ] || [ "$(readlink /usr/bin/vim)" != "/usr/bin/vi" ]; then
+	echo "Creating symlink: /usr/bin/vim -> /usr/bin/vi"
+	sudo ln -fs /usr/bin/vi /usr/bin/vim
+fi
 
 # come back to the previous working dir
 cd -

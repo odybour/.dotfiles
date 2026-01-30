@@ -6,11 +6,12 @@
 [user]
 	email = odysseas.bournas@nokia.com
 	name = Odysseas Bournas
-;[http]
-    ;proxy = http://10.144.1.10:8080
+[http]
+    ; proxy = http://10.144.1.10:8080
+    proxy = http://10.158.100.2:8080
 
-; [url "ssh://gerrit-essl2.int.net.nokia.com:29418"]
-;         insteadOf = ssh://gerrit.ext.net.nokia.com:29418
-; [url "ssh://gerrit.ext.net.nokia.com:29418"]
-;         pushInsteadOf = ssh://gerrit.ext.net.nokia.com:29418
-;         pushInsteadOf = ssh://gerrit-essl2.int.net.nokia.com:29418
+[url "ssh://gerrit-essl2.int.net.nokia.com:29418"]
+        insteadOf = ssh://gerrit.ext.net.nokia.com:29418
+[url "ssh://gerrit.ext.net.nokia.com:29418"]
+        pushInsteadOf = ssh://gerrit.ext.net.nokia.com:29418
+        pushInsteadOf = ssh://gerrit-essl2.int.net.nokia.com:29418

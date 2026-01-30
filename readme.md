@@ -56,7 +56,7 @@ exei poly pragma. gia thn wra akouw apo ta Bluetooth kai mikrowno aytomata pairn
 * Wayland - Settings
 
 Intellij:
-Add in Help-> edit custom VM properties
+Add in Help-> edit custom VM options
 -Dawt.toolkit.name=WLToolkit
 
 VScode:
