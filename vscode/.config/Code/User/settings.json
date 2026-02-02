@@ -1,0 +1,79 @@
+{
+  // required by neovim extension for better performance
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  // required to honour the remapped escape key (in sway) to caps-lock
+  "keyboard.dispatch": "keyCode",
+  "window.confirmSaveUntitledWorkspace": false,
+  "redhat.telemetry.enabled": true,
+  "editor.fontFamily": "Hack Nerd Font Mono",
+  // "editor.fontFamily": "JetBrains Mono",
+  "editor.inlineSuggest.fontFamily": "'Monaspace Krypton', monospace",
+  "java.trace.server": "verbose",
+  // "editor.fontLigatures": true,
+  // "editor.fontVariations": false,
+  "editor.cursorSurroundingLines": 5,
+  "editor.cursorSurroundingLinesStyle": "all",
+  "editor.lineHeight": 1.7,
+  "window.zoomLevel": 0.4,
+  // hover on text in editor, ctrl + shift + p , then Inspect Editor Tokens and Scopes to see its token name. 
+  // Then provide color for that token name below
+  "workbench.colorTheme": "Darcula (IntelliJ)",
+  "workbench.colorCustomizations": {
+    "menu.background": "#232121",
+    "editor.background": "#292828",
+    "sideBar.background": "#2a2828",
+    "titleBar.activeBackground": "#1a1a1a",
+    "activityBar.background": "#1a1a1a",
+    "panel.background": "#272626",
+    "tab.activeBackground": "#1e1e1e",
+    "tab.inactiveBackground": "#141414",
+    "list.focusOutline": "#569CD6"
+  },
+  "editor.semanticHighlighting.enabled": true,
+  "editor.stickyScroll.enabled": false,
+  "editor.bracketPairColorization.enabled": false,
+  "git.openRepositoryInParentFolders": "always",
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "files.autoSave": "afterDelay",
+  "git.blame.editorDecoration.enabled": false,
+  "git.blame.statusBarItem.enabled": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "git.enableSmartCommit": true,
+  "java.completion.favoriteStaticMembers": [
+    "org.junit.Assert.*",
+    "org.junit.Assume.*",
+    "org.junit.jupiter.api.Assertions.*",
+    "org.junit.jupiter.api.Assumptions.*",
+    "org.junit.jupiter.api.DynamicContainer.*",
+    "org.junit.jupiter.api.DynamicTest.*",
+    "org.mockito.Mockito.*",
+    "org.mockito.ArgumentMatchers.*",
+    "org.mockito.Answers.*"
+  ],
+  "[java]": {
+    "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code"
+  },
+  "chat.viewSessions.orientation": "stacked",
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  // "editor.guides.bracketPairs": false,
+  // "editor.guides.bracketPairsHorizontal": false,
+  // "editor.guides.indentation": false,
+  // --- Performance Improvements ---
+  "breadcrumbs.enabled": false,
+  "editor.minimap.enabled": false,
+  "search.searchOnType": false,
+  "editor.codeLens": false,
+  "gitlens.currentLine.enabled": false,
+  "zenMode.centerLayout": false,
+  "zenMode.fullScreen": false,
+  "zenMode.hideLineNumbers": false
+}
