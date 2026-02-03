@@ -237,7 +237,6 @@
         "key": "shift+h",
         "command": "workbench.action.decreaseViewWidth"
     },
-    asdfsadf
     {
         "key": "shift+l",
         "command": "workbench.action.increaseViewWidth"
