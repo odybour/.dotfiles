@@ -1,0 +1,245 @@
+// Place your key bindings in this file to override the defaultsauto[]
+// Also check: 
+// /home/bournas/.vscode/extensions/asvetliakov.vscode-neovim-1.18.24/runtime/vscode/overrides/vscode-code-actions.vim
+// /home/bournas/programming/aux/.dotfiles/nvim/.config/modern-neovim/init.lua
+[
+    // Navigation
+    {
+        "command": "workbench.action.navigateLeft",
+        "key": "alt+w h"
+    },
+    {
+        "command": "workbench.action.navigateRight",
+        "key": "alt+w l"
+    },
+    {
+        "command": "workbench.action.navigateUp",
+        "key": "alt+w k"
+    },
+    {
+        "command": "workbench.action.navigateDown",
+        "key": "alt+w j"
+    },
+    {
+        "command": "workbench.action.showAllEditors",
+        "key": "space ,",
+        "when": "neovim.mode == normal && editorTextFocus"
+    },
+    {
+        "command": "workbench.action.toggleSidebarVisibility",
+        "key": "space e",
+        "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "command": "workbench.action.nextEditorInGroup",
+        "key": "ctrl+tab",
+        "when": "(neovim.mode == normal || neovim.mode == visual) && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "command": "workbench.action.previousEditorInGroup",
+        "key": "ctrl+shift-tab",
+        "when": "(neovim.mode == normal || neovim.mode == visual) && (editorTextFocus || !inputFocus)"
+    },
+    // Coding
+    {
+        "command": "editor.action.codeAction",
+        "key": "space c a",
+        "when": "neovim.mode == normal && editorTextFocus"
+    },
+    {
+        "command": "editor.action.rename",
+        "key": "space r e",
+        "when": "neovim.mode == normal && editorTextFocus"
+    },
+    {
+        "command": "workbench.action.gotoSymbol",
+        "key": "space c s",
+        "when": "neovim.mode == normal && editorTextFocus"
+    },
+    {
+        "command": "workbench.action.closeActiveEditor",
+        "key": "space b d",
+        "when": "neovim.mode == normal && editorTextFocus"
+    },
+    {
+        "key": "space g i",
+        "command": "editor.showCallHierarchy",
+        "when": "neovim.mode == normal && editorHasCallHierarchyProvider && editorTextFocus && !inReferenceSearchEditor"
+    },
+    {
+        "key": "space g i",
+        "command": "editor.showIncomingCalls",
+        "when": "neovim.mode == normal && (callHierarchyVisible && callHierarchyDirection == 'outgoingCalls')"
+    },
+    {
+        "key": "space g i",
+        "command": "editor.showOutgoingCalls",
+        "when": "neovim.mode == normal && (callHierarchyVisible && callHierarchyDirection == 'incomingCalls')"
+    },
+    {
+        "key": "space g i",
+        "command": "editor.showSubtypes",
+        "when": "neovim.mode == normal && (typeHierarchyVisible && typeHierarchyDirection == 'supertypes')"
+    },
+    {
+        "key": "space g i",
+        "command": "editor.showSupertypes",
+        "when": "neovim.mode == normal && (typeHierarchyVisible && typeHierarchyDirection == 'subtypes')"
+    },
+    {
+        "command": "workbench.action.quickOpen",
+        "key": "space f f",
+        "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "space f g",
+        "command": "workbench.action.findInFiles",
+        "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "space f g",
+        "command": "filesExplorer.findInFolder",
+        "when": "neovim.mode == normal && (explorerResourceIsFolder && explorerViewletVisible && filesExplorerFocus && !inputFocus)"
+    },
+    {
+        "key": "space g g",
+        "command": "workbench.view.scm",
+        "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "alt-n",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "(neovim.mode == normal || neovim.mode == visual) && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "command": "workbench.files.action.showActiveFileInExplorer",
+        "key": "ctrl+n"
+    },
+    {
+        "key": "space l f",
+        "command": "editor.action.formatDocument",
+        "when": "neovim.mode == normal && (editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor)"
+    },
+    {
+        "key": "space l f",
+        "command": "editor.action.formatSelection",
+        "when": "neovim.mode == visual && (editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly)"
+    },
+    {
+        "key": "alt+enter",
+        "command": "editor.action.quickFix",
+        "when": "editorTextFocus"
+    },
+    // remove bindings
+    {
+        "command": "-workbench.action.focusActiveEditorGroup",
+        "key": "f12"
+    },
+    {
+        "command": "-editor.debug.action.toggleBreakpoint",
+        "key": "ctrl+shift+b",
+        "when": "editorTextFocus"
+    },
+    {
+        "command": "-extension.fuzzySearch",
+        "key": "ctrl+k ctrl+f"
+    },
+    {
+        "command": "-workbench.action.findInFiles",
+        "key": "ctrl+h"
+    },
+    {
+        "command": "-workbench.action.findInFiles",
+        "key": "ctrl+shift+f"
+    },
+    {
+        "command": "-editor.action.formatSelection",
+        "key": "ctrl+shift+f",
+        "when": "editorHasSelection && editorTextFocus"
+    },
+    {
+        "command": "-editor.action.formatDocument",
+        "key": "ctrl+shift+f",
+        "when": "editorTextFocus && !editorHasSelection"
+    },
+    {
+        "command": "-filesExplorer.findInFolder",
+        "key": "shift+alt+f",
+        "when": "explorerResourceIsFolder && explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
+    {
+        "command": "-editor.action.quickFix",
+        "key": "ctrl+1",
+        "when": "editorTextFocus"
+    },
+    {
+        "command": "-editor.action.deleteLines",
+        "key": "ctrl+d",
+        "when": "editorTextFocus"
+    },
+    {
+        "command": "-editor.action.goToImplementation",
+        "key": "ctrl+f12",
+        "when": "editorHasImplementationProvider && editorTextFocus"
+    },
+    {
+        "key": "alt+tab f",
+        "command": "workbench.action.files.openFolder",
+        "when": "openFolderWorkspaceSupport"
+    },
+    {
+        "key": "space g p",
+        "command": "github.copilot.chat.completions.toggle",
+        "when": "neovim.mode == normal && (github.copilot.activated && github.copilot.extensionUnification.activated && editorTextFocus)"
+    },
+    // Testing
+    {
+        "key": "space t",
+        "command": "testing.runAtCursor",
+        "when": "neovim.mode == normal && (editorTextFocus)"
+    },
+    {
+        "key": "space d t",
+        "command": "testing.debugAtCursor",
+        "when": "neovim.mode == normal && (editorTextFocus)"
+    },
+    {
+        "key": "space T",
+        "command": "testing.runCurrentFile",
+        "when": "neovim.mode == normal && (editorTextFocus)"
+    },
+    {
+        "key": "space d T",
+        "command": "testing.debugCurrentFile",
+        "when": "neovim.mode == normal && (editorTextFocus)"
+    },
+    {
+        "key": "space b",
+        "command": "editor.debug.action.toggleBreakpoint",
+        "when": "neovim.mode == normal && (debuggersAvailable && editorTextFocus)"
+    },
+    {
+        "key": "space d q",
+        "command": "workbench.action.debug.stop",
+        "when": "neovim.mode == normal && (editorTextFocus && inDebugMode)"
+    },
+    {
+        "key": "shift+g",
+        "command": "vscode-neovim.send",
+        "when": "editorTextFocus && neovim.init && focusedView == 'workbench.panel.output' && neovim.mode != 'insert'",
+        "args": "G"
+    },
+    {
+        "key": "alt+tab z",
+        "command": "workbench.action.toggleZenMode"
+    },
+    {
+        "key": "shift+h",
+        "command": "workbench.action.decreaseViewWidth"
+    },
+    asdfsadf
+    {
+        "key": "shift+l",
+        "command": "workbench.action.increaseViewWidth"
+    }
+]

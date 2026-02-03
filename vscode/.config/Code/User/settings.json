@@ -75,5 +75,6 @@
   "gitlens.currentLine.enabled": false,
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false,
-  "zenMode.hideLineNumbers": false
+  "zenMode.hideLineNumbers": false,
+  "window.openFoldersInNewWindow": "on"
 }
