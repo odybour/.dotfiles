@@ -21,9 +21,19 @@
         "key": "alt+w j"
     },
     {
-        "command": "workbench.action.showAllEditors",
         "key": "space ,",
-        "when": "neovim.mode == normal && editorTextFocus"
+        "command": "extension.intellijRecentFiles",
+        "when": "neovim.mode == normal && editorTextFocus && !inQuickOpen"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.quickOpenNavigateNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.quickOpenNavigatePrevious",
+        "when": "inQuickOpen"
     },
     {
         "command": "workbench.action.toggleSidebarVisibility",
@@ -233,12 +243,13 @@
         "key": "alt+tab z",
         "command": "workbench.action.toggleZenMode"
     },
-    {
-        "key": "shift+h",
-        "command": "workbench.action.decreaseViewWidth"
-    },
-    {
-        "key": "shift+l",
-        "command": "workbench.action.increaseViewWidth"
-    }
+    // problem - when i search, if i type shift+h for capital H, it will resize window instead..
+    // {
+    //     "key": "shift+h",
+    //     "command": "workbench.action.decreaseViewWidth"
+    // },
+    // {
+    //     "key": "shift+l",
+    //     "command": "workbench.action.increaseViewWidth"
+    // }
 ]

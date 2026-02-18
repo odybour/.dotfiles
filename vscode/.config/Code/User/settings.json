@@ -17,9 +17,9 @@
   "editor.cursorSurroundingLinesStyle": "all",
   "editor.lineHeight": 1.7,
   "window.zoomLevel": 0.4,
-  // hover on text in editor, ctrl + shift + p , then Inspect Editor Tokens and Scopes to see its token name. 
+  // hover on text in editor, ctrl + shift + p , then Inspect Editor Tokens and Scopes to see its token name.
   // Then provide color for that token name below
-  "workbench.colorTheme": "Darcula (IntelliJ)",
+  // "workbench.colorTheme": "Darcula (IntelliJ)",
   "workbench.colorCustomizations": {
     "menu.background": "#232121",
     "editor.background": "#292828",
@@ -47,6 +47,8 @@
     "scminput": false
   },
   "git.enableSmartCommit": true,
+  "java.sources.organizeImports.staticStarThreshold": 110,
+  "java.sources.organizeImports.starThreshold": 110,
   "java.completion.favoriteStaticMembers": [
     "org.junit.Assert.*",
     "org.junit.Assume.*",
@@ -58,7 +60,7 @@
     "org.mockito.ArgumentMatchers.*",
     "org.mockito.Answers.*"
   ],
-  "[java]": {
+  "[Java]": {
     "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code"
   },
   "chat.viewSessions.orientation": "stacked",
@@ -76,5 +78,11 @@
   "zenMode.centerLayout": false,
   "zenMode.fullScreen": false,
   "zenMode.hideLineNumbers": false,
-  "window.openFoldersInNewWindow": "on"
+  "window.openFoldersInNewWindow": "on",
+  "theme-by-language.themes": {
+    "*": "Darcula",
+    "java": "Darcula (IntelliJ)",
+    "xml": "Darcula (IntelliJ)"
+  },
+  "remote.autoForwardPortsSource": "hybrid"
 }
