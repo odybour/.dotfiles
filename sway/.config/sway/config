@@ -23,7 +23,7 @@ set $menu wofi --show run
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/wallpapers/Nexus/contents/images_dark/5120x2880.png fill
+#output * bg /usr/share/wallpapers/Nexus/contents/images_dark/5120x2880.png fill
 #
 # Example configuration:
 #
@@ -261,7 +261,7 @@ bar {
 
 # requires network-manager-applet to be installed
 exec_always nm-applet --indicator
-exec_always blueman-applet
+#exec_always blueman-applet
 
 # To get app_id: swaymsg -t get_tree | grep app_id
 for_window [app_id="Alacritty"] move container to workspace 13
@@ -273,9 +273,9 @@ for_window [app_id="org.kde.kwrite"] move container to workspace 3
 for_window [app_id="thunar"] move container to workspace 3
 for_window [app_id="code"] move container to workspace 1
 
-exec google-chrome-stable
-exec code
-exec teams-proxy
+#exec google-chrome-stable
+#exec code
+#exec teams-proxy
 # exec screengrab
 
 # Note: this starts the tmux session before sway, and i cannot run swaymsg commands (e.g. swaymsg reload)

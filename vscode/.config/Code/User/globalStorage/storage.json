@@ -1,0 +1,110 @@
+{
+    "telemetry.sqmId": "",
+    "telemetry.machineId": "9a83efdf857af9e95a791504a2f4b345287bebeb3ee1958dfdba0bc7daa6dcee",
+    "telemetry.devDeviceId": "4770d882-cbe2-4fe5-a38b-2fcc382a5cf9",
+    "backupWorkspaces": {
+        "workspaces": [],
+        "folders": [
+            {
+                "folderUri": "file:///home/bournas/programming/aux/.dotfiles/nvim/.config/ody-neovim"
+            },
+            {
+                "folderUri": "file:///home/bournas/programming/aux/.dotfiles/nvim/.config/modern-neovim"
+            }
+        ],
+        "emptyWindows": []
+    },
+    "windowControlHeight": 38,
+    "profileAssociations": {
+        "workspaces": {
+            "file:///home/bournas": "__default__profile__",
+            "file:///home/bournas/programming/aux/.dotfiles/nvim/.config/ody-neovim": "__default__profile__",
+            "file:///home/bournas/programming/aux/.dotfiles/nvim/.config/modern-neovim": "__default__profile__"
+        },
+        "emptyWindows": {}
+    },
+    "theme": "vs-dark",
+    "themeBackground": "#292828",
+    "windowSplash": {
+        "zoomLevel": 0.4,
+        "baseTheme": "vs-dark",
+        "colorInfo": {
+            "foreground": "#cccccc",
+            "background": "#292828",
+            "editorBackground": "#292828",
+            "titleBarBackground": "#1a1a1a",
+            "activityBarBackground": "#1a1a1a",
+            "sideBarBackground": "#2a2828",
+            "sideBarBorder": "rgba(255, 255, 255, 0.1)",
+            "statusBarBackground": "rgba(255, 255, 255, 0.1)",
+            "statusBarNoFolderBackground": "#68217a"
+        },
+        "layoutInfo": {
+            "sideBarSide": "left",
+            "editorPartMinWidth": 220,
+            "titleBarHeight": 35,
+            "activityBarWidth": 48,
+            "sideBarWidth": 222,
+            "auxiliaryBarWidth": 222,
+            "statusBarHeight": 22,
+            "windowBorder": false
+        }
+    },
+    "windowSplashWorkspaceOverride": {
+        "layoutInfo": {
+            "sideBarWidth": 222,
+            "auxiliaryBarWidth": 222,
+            "workspaces": {
+                "c850da480f518e65d0a9a92d51a87af5": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "b69e6a35b58f76dfb2956a6cf26f72bf": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                },
+                "5e6048803b6425a668208b3c70a4241e": {
+                    "sideBarVisible": true,
+                    "auxiliaryBarVisible": true
+                }
+            }
+        }
+    },
+    "windowsState": {
+        "lastActiveWindow": {
+            "folder": "file:///home/bournas/programming/aux/.dotfiles/nvim/.config/ody-neovim",
+            "backupPath": "/home/bournas/.config/Code/Backups/6cbb0e7a54cf634fc0b74b101e074c49",
+            "uiState": {
+                "mode": 1,
+                "x": 0,
+                "y": 0,
+                "width": 1916,
+                "height": 1141
+            }
+        },
+        "openedWindows": [
+            {
+                "folder": "file:///home/bournas/programming/aux/.dotfiles/nvim/.config/modern-neovim",
+                "backupPath": "/home/bournas/.config/Code/Backups/0d16f3821a1147eab7c4f6ae0866073c",
+                "uiState": {
+                    "mode": 1,
+                    "x": 0,
+                    "y": 0,
+                    "width": 1916,
+                    "height": 1141
+                }
+            },
+            {
+                "folder": "file:///home/bournas/programming/aux/.dotfiles/nvim/.config/ody-neovim",
+                "backupPath": "/home/bournas/.config/Code/Backups/6cbb0e7a54cf634fc0b74b101e074c49",
+                "uiState": {
+                    "mode": 1,
+                    "x": 0,
+                    "y": 0,
+                    "width": 1916,
+                    "height": 1141
+                }
+            }
+        ]
+    }
+}

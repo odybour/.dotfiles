@@ -47,3 +47,13 @@ luac.out
 
 __pycache__/
 .luarc.json
+
+tt.*
+.tests
+doc/tags
+debug
+.repro
+foo.*
+*.log
+data
+
