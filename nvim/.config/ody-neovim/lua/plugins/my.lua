@@ -15,10 +15,17 @@ return { -- file explorer
             })
         end,
         desc = "Explorer NeoTree (Root Dir)"
-    }}
+    }},
+    opts = {
+        filesystem = {
+            filtered_items = {
+                visible = true -- when true, they will just be displayed differently than normal items
+            }
+        }
+    }
 }, {
     "okuuva/auto-save.nvim",
-    version = '^1.0.0', -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
+    version = "^1.0.0", -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
     cmd = "ASToggle", -- optional for lazy loading on command
     event = {"InsertLeave", "TextChanged"}, -- optional for lazy loading on trigger events
     keys = {{
@@ -29,5 +36,10 @@ return { -- file explorer
     opts = {
         -- your config goes here
         -- or just leave it empty :)
+    }
+}, {
+    "neovim/nvim-lspconfig",
+    opts = {
+        autoformat = false
     }
 }}

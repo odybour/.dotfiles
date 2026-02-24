@@ -16,7 +16,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term foot
+set $term alacritty
 # Your preferred application launcher
 set $menu wofi --show run
 
@@ -264,15 +264,17 @@ exec_always nm-applet --indicator
 #exec_always blueman-applet
 
 # To get app_id: swaymsg -t get_tree | grep app_id
-for_window [app_id="Alacritty"] move container to workspace 13
+# for_window [app_id="Alacritty"] move container to workspace 13
 for_window [app_id="google-chrome"] move container to workspace 2
 for_window [class="jetbrains-idea"] move to workspace 1
 for_window [class="Microsoft Teams - Preview"] floating enable, move to workspace 10
 for_window [app_id="com.obsproject.Studio"] move container to workspace 5
 for_window [app_id="org.kde.kwrite"] move container to workspace 3
 for_window [app_id="thunar"] move container to workspace 3
+for_window [app_id="ZSTray"] move container to workspace 7
 for_window [app_id="code"] move container to workspace 1
-
+exec /opt/zscaler/bin/ZSTray 
+exec_always kanshi
 #exec google-chrome-stable
 #exec code
 #exec teams-proxy

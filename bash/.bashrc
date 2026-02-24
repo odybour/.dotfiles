@@ -1,76 +1,139 @@
-#
-# ~/.bashrc
-#
-# Put here anything that is strictly related to the BASH shell
-#
-#echo "~/.bashrc has been sourced"
-unset LANG
-source /etc/profile.d/locale.sh
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+*i*) ;;
+*) return ;;
+esac
+
+# If running in a graphical environment, auto-attach tmux unless already inside tmux
+if [[ $DISPLAY ]] && [[ -z "$TMUX" ]]; then
+  tmux attach || tmux
+fi
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+  debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+xterm-color | *-256color) color_prompt=yes ;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+  else
+    color_prompt=
+  fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm* | rxvt*)
+  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+  ;;
+*) ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
+
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
 
 set -o vi
 
-export EDITOR=nvim
-export VISUAL=nvim
+export NVIM_APPNAME=ody-neovim
 
-alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-if [[ $DISPLAY ]]; then
-    # If not running interactively, do not do anything
-    [[ $- != *i* ]] && return
-    # Attach to a running tmux session or create a new one if none exists
-    [[ -z "$TMUX" ]] && $(tmux attach || tmux)
-fi
-
-
-source <(kubectl completion bash)
-
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(direnv hook bash)"
-
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
-
-# do i need these? i can do the source ./bin/activate myself
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-#eval "$(pyenv init -)"
-#eval "$(pyenv virtualenv-init -)"
-
-bind -x '"\C-f":tmux-sessionizer'
-
-#source '/home/bournas/lib/azure-cli/az.completion'
-
-#export NVM_DIR="$HOME/.nvm"
-# [-s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# https://neovim.io/doc/user/starting.html 
-# this tells nvim to find the configuration in ~/.config/modern-neovim and NOT ~/.config/nvim which is the default one.
-# the ~/.config/modern-neovim is copied with stow
-export NVIM_APPNAME=modern-neovim
-
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# export JAVA_TOOL_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true --add-opens=java.base/com.sun.crypto.provider=ALL-UNNAMED"
-
-# required by anvgit
-# export cloudName=OHN64
 export cloudName=
 export CSL=$(whoami)
 export HOST_UID=$(id -u)
 export HOST_GID=$(id -g)
 export realuser=$(whoami)
 
-alias minikube-start='minikube start driver=none --extra-config=kubelet.serialize-image-pulls=false --kubernetes-version v1.24.7'
+export ARTIFACTORY_IP=artifactory-espoo-fnms.int.net.nokia.com
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export cloudName=OHN64
 
-# if [ "$IS_CONTAINER" = "true" ]; then
-#     exec /bin/bash --rcfile ~/.bashrc_container
-# fi
-if [ "$IS_CONTAINER" = "true" ]; then
-    exec /bin/bash --rcfile ~/.bashrc_container
-fi
-
-command -v rpk >/dev/null && . <(rpk generate shell-completion bash)
-
+export PATH=$PATH:/home/bournas/programming/nokia/ee-environment/boxes/common-box

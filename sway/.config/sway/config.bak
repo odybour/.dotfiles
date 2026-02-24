@@ -239,8 +239,6 @@ for_window [window_role="task_dialog"] floating enable
 exec --no-startup-id swaymsg 'workspace 13; exec /usr/bin/alacritty'
 #exec --no-startup-id swaymsg 'workspace 1; exec /usr/bin/alacritty'
 exec --no-startup-id swaymsg 'workspace 2; exec /usr/bin/google-chrome-stable'
-# This does not work well with teams - share feature...
-#exec picom -b
 
 output "*" bg /usr/share/wallpapers/Nexus/contents/images_dark/5120x2880.png fill
 
