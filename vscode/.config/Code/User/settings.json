@@ -84,5 +84,6 @@
     "java": "Darcula (IntelliJ)",
     "xml": "Darcula (IntelliJ)"
   },
-  "remote.autoForwardPortsSource": "hybrid"
+  "remote.autoForwardPortsSource": "hybrid",
+  "workbench.colorTheme": "Darcula"
 }

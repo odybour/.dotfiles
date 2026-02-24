@@ -58,3 +58,11 @@ foo.*
 data
 
 .vscode
+# for some reason vscode uses folder in this path for its files.. 
+# exclude all
+vscode
+
+# include following
+!vscode/.config/Code/User/keybindings.json
+!vscode/.config/Code/User/settings.json
+
