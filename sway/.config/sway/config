@@ -23,15 +23,10 @@ set $menu wofi --show run
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-#output * bg /usr/share/wallpapers/Nexus/contents/images_dark/5120x2880.png fill
+# https://archimg.cc
+output * bg ~/Pictures/284.jpg fill
+# output * bg ~/Pictures/tree-1771927894337-1963.jpg fill
 #
-# Example configuration:
-#
-# TIP: run wdisplays to get the correct values to put below (output name, resolution and position):
-#output eDP-1 resolution 1920x1200 position 1920,0
-# output HDMI-A-1 resolution 1920x1080 position 3840,0
-#output DP-5 resolution 1920x1200 position 3840,0
-#output DP-7 resolution 1920x1080 position 5760,0
 
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -265,14 +260,16 @@ exec_always nm-applet --indicator
 
 # To get app_id: swaymsg -t get_tree | grep app_id
 # for_window [app_id="Alacritty"] move container to workspace 13
-for_window [app_id="google-chrome"] move container to workspace 2
 for_window [class="jetbrains-idea"] move to workspace 1
-for_window [class="Microsoft Teams - Preview"] floating enable, move to workspace 10
-for_window [app_id="com.obsproject.Studio"] move container to workspace 5
+for_window [app_id="code"] move container to workspace 1
+for_window [app_id="google-chrome"] move container to workspace 2
 for_window [app_id="org.kde.kwrite"] move container to workspace 3
 for_window [app_id="thunar"] move container to workspace 3
+for_window [app_id="com.obsproject.Studio"] move container to workspace 5
 for_window [app_id="ZSTray"] move container to workspace 7
-for_window [app_id="code"] move container to workspace 1
+for_window [class="Microsoft Teams - Preview"] floating enable, move to workspace 10
+for_window [app_id="microsoft-edge"] move container to workspace 10
+
 exec /opt/zscaler/bin/ZSTray 
 exec_always kanshi
 #exec google-chrome-stable

@@ -1,3 +1,4 @@
+# TIP: run wdisplays to get the correct values to put below (output name, resolution (aka mode) and position)
 profile laptop {
     output eDP-1 enable mode 1920x1200 position 0,0 scale 1.0
 }
