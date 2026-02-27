@@ -102,7 +102,17 @@
         "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
     },
     {
+        "command": "workbench.action.quickOpen",
+        "key": "space space",
+        "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
+    },
+    {
         "key": "space f g",
+        "command": "workbench.action.findInFiles",
+        "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
+    },
+    {
+        "key": "space /",
         "command": "workbench.action.findInFiles",
         "when": "neovim.mode == normal && (editorTextFocus || !inputFocus)"
     },
@@ -243,6 +253,26 @@
         "key": "alt+tab z",
         "command": "workbench.action.toggleZenMode"
     },
+    {
+        "key": "F5",
+        "command": "workbench.action.debug.stepInto",
+        "when": "debugState != 'inactive'"
+    },
+    {
+        "key": "F6",
+        "command": "workbench.action.debug.stepOver",
+        "when": "debugState == 'stopped'"
+    },
+    {
+        "key": "F7",
+        "command": "workbench.action.debug.stepOut",
+        "when": "debugState == 'stopped'"
+    },
+    {
+        "key": "F8",
+        "command": "workbench.action.debug.continue",
+        "when": "debugState == 'stopped'"
+    }
     // problem - when i search, if i type shift+h for capital H, it will resize window instead..
     // {
     //     "key": "shift+h",
