@@ -12,7 +12,8 @@ Get the Nerd Font Hack from [here](https://www.nerdfonts.com/font-downloads).
     fc-cache -vf
     fc-match Hack -a | grep -i hack
 
-> Logout
+ /home/bournas/programming/aux/ipfix-etl-pipelines/.venv/bin/activate
+
 
 Edit Konsole profile settings and select "hack nomo NF font" (κάτι τέτοιο) - not the common Hack font.
 

@@ -9,3 +9,8 @@ profile external {
     output DP-3 enable mode 3840x2160 position 3840,0 scale 1.5
 }
 
+profile two-monitors {
+    output eDP-1 enable mode 1920x1200 position 0,0 scale 1.0
+    output DP-3 enable mode 1920x1080 position 1920,0 scale 1.0
+}
+

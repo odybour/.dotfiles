@@ -3,5 +3,5 @@
 -- Add any additional options here
 --
 vim.g.autoformat = false
-vim.g.clipboard = 'osc52'
-vim.opt.clipboard:append("unnamedplus")
+-- vim.g.clipboard = 'osc52'
+-- vim.opt.clipboard:append("unnamedplus")
