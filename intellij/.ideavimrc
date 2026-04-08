@@ -1,4 +1,5 @@
 " .ideavimrc configuration file
+" (note, do a :actionlist to see all available actions and their names) - you can filter with :actionlist Repla
 
 """ Editing and Reloading the Config -
 " Note: You MUST disable in settings->Editor->General the copy as rich text
@@ -21,12 +22,18 @@ let g:NERDTreeMapNewFile = 'a'
 let g:NERDTreeMapNewDir = 'A'
 let g:NERDTreeMapActivateNode = 'l'
 
-" File operations
+" do these work after restart? if not just removes
+autocmd FileType nerdtree nmap <buffer> <leader>sp :action ReplaceInPath<CR>
+autocmd FileType nerdtree nmap <buffer> <leader>sw <Action>(ReplaceInPath)
+
+" File operations 
 set incsearch
 nnoremap <leader>ff :action GotoFile<CR>
 nnoremap <leader><leader> :action GotoFile<CR>
 nnoremap <leader>fg :action FindInPath<CR>
 nnoremap <leader>/ :action FindInPath<CR>
+nnoremap <leader>sr :action Replace<CR>
+nnoremap <leader>sp :action ReplaceInPath<CR>
 
 " Code Navigation
 nnoremap K :action ShowHoverInfo<CR>
@@ -38,7 +45,7 @@ nnoremap gr :action ShowUsages<CR>
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gf :action GotoSuperMethod<CR>
 nnoremap gt :action GotoTest<CR>
-nnoremap gb :action Back<CR>
+nnoremap gb :actionR Back<CR>
 nnoremap gB :action Forward<CR>
 nnoremap go :action GotoSymbol<CR>
 
