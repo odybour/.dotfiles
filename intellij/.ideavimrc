@@ -136,6 +136,18 @@ set relativenumber
 nnoremap <Leader>q :action CloseContent<CR>
 nnoremap <Leader>qa :action CloseAllEditors<CR>
 
+" Press `f` to activate AceJump
+map f <Action>(AceAction)
+" Press `F` to activate Target Mode
+map F <Action>(AceTargetAction)
+" Press `g` to activate Line Mode
+map g <Action>(AceLineAction)
+
+" Press `S` in normal mode to activate AceJump mode before the caret
+nmap yS <Action>(AceBackwardAction)
+
+" Press `s` in normal mode to activate AceJump mode after the caret
+nmap ys <Action>(AceForwardAction)
 
 " " Enable line numbers
 " set number
