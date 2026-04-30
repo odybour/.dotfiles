@@ -266,10 +266,10 @@ exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DE
 for_window [class="jetbrains-idea"] move to workspace 1
 for_window [app_id="microsoft-edge"] move container to workspace 2
 for_window [app_id="thunar"] move container to workspace 3
-for_window [app_id="code"] move container to workspace 5 
+for_window [app_id="ZSTray"] move container to workspace 5 
 for_window [app_id="com.obsproject.Studio"] move container to workspace 5
-for_window [app_id="ZSTray"] move container to workspace 7
 for_window [app_id="google-chrome"] move container to workspace 8
+for_window [app_id="code"] move container to workspace 9 
 for_window [class="Microsoft Teams - Preview"] floating enable, move to workspace 10
 
 exec /opt/zscaler/bin/ZSTray 
