@@ -141,7 +141,7 @@ map f <Action>(AceAction)
 " Press `F` to activate Target Mode
 map F <Action>(AceTargetAction)
 " Press `g` to activate Line Mode
-map g <Action>(AceLineAction)
+" map g <Action>(AceLineAction)
 
 " Press `S` in normal mode to activate AceJump mode before the caret
 nmap yS <Action>(AceBackwardAction)
