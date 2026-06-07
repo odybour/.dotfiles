@@ -1,0 +1,193 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(ls)",
+      "Shell(cat)",
+      "Shell(echo)",
+      "Write(/home/bournas/.cursor/cli-config.json)",
+      "Shell(git -C)",
+      "Shell(head)",
+      "WebFetch(docs.spring.io)",
+      "Mcp(mysql-java:run_query)",
+      "Shell(mvn)",
+      "Shell(devcon)",
+      "Mcp(mysql-java:list_sample_inventory)",
+      "Mcp(mysql-java:list_tables)",
+      "Shell(git diff)",
+      "Shell(git log)",
+      "Shell(kill)",
+      "Shell(sleep)",
+      "Shell(rg)",
+      "Shell(find)",
+      "Shell(grep)"
+    ],
+    "deny": []
+  },
+  "version": 1,
+  "editor": {
+    "vimMode": true
+  },
+  "notifications": true,
+  "hints": true,
+  "rewind": false,
+  "suggestNextPrompt": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.cursor/statusline.sh",
+    "padding": 2
+  },
+  "model": {
+    "modelId": "gpt-5.3-codex",
+    "displayModelId": "gpt-5.3-codex",
+    "displayName": "Codex 5.3 Medium",
+    "displayNameShort": "Codex 5.3 Medium",
+    "aliases": [
+      "codex-latest",
+      "codex",
+      "codex-5.3"
+    ],
+    "maxMode": false
+  },
+  "hasChangedDefaultModel": true,
+  "maxMode": false,
+  "modelParameters": {
+    "gpt-5.5": [
+      {
+        "id": "context",
+        "value": "272k"
+      },
+      {
+        "id": "reasoning",
+        "value": "medium"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "gpt-5.3-codex": [
+      {
+        "id": "reasoning",
+        "value": "medium"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "composer-2": [
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "claude-4.6-opus-high-thinking": [],
+    "claude-sonnet-4-6": [
+      {
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "200k"
+      },
+      {
+        "id": "effort",
+        "value": "medium"
+      }
+    ],
+    "claude-opus-4-6": [
+      {
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "200k"
+      },
+      {
+        "id": "effort",
+        "value": "high"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "composer-2.5": [
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ],
+    "claude-opus-4-7": [
+      {
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "300k"
+      },
+      {
+        "id": "effort",
+        "value": "xhigh"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ]
+  },
+  "selectedModel": {
+    "modelId": "gpt-5.3-codex",
+    "parameters": [
+      {
+        "id": "reasoning",
+        "value": "medium"
+      },
+      {
+        "id": "fast",
+        "value": "false"
+      }
+    ]
+  },
+  "privacyCache": {
+    "ghostMode": true,
+    "privacyMode": 2,
+    "updatedAt": 1780824980044
+  },
+  "serverConfigCache": {
+    "backendUrl": "https://api2.cursor.sh",
+    "authCacheKey": "auth:auth0|user_01KQF5NF23258SQA6XK0PEE9BQ",
+    "teamId": 16130973,
+    "agentUrlConfig": {
+      "agentUrl": "https://agentn.us.api5.cursor.sh",
+      "agentnUrl": "https://agentn.us.api5.cursor.sh"
+    },
+    "cliSandboxDefaultEnabled": false,
+    "serverHttp2Config": 0,
+    "updatedAt": 1780823714315
+  },
+  "authInfo": {
+    "email": "odysseas.bournas@nokia.com",
+    "displayName": "Odysseas Bournas",
+    "teamId": 16130973,
+    "teamName": "Nokia (Digital Office)",
+    "userId": 353217598,
+    "authId": "auth0|user_01KQF5NF23258SQA6XK0PEE9BQ"
+  },
+  "network": {
+    "useHttp1ForAgent": false
+  },
+  "approvalMode": "allowlist",
+  "sandbox": {
+    "mode": "disabled",
+    "networkAccess": "user_config_with_defaults"
+  },
+  "runEverythingSettingsPromptStreak": 1,
+  "attribution": {
+    "attributeCommitsToAgent": true,
+    "attributePRsToAgent": true
+  }
+}

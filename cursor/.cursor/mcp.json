@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "EE JIRA JDC2 MCP": {
+      "type": "streamableHttp",
+      "url": "https://itatlas-mcp.int.net.nokia.com/jdc2/mcp",
+      "headers": {}
+    },
+    "EE CONFLUENCE MCP": {
+      "type": "streamableHttp",
+      "url": "https://itatlas-mcp.int.net.nokia.com/eeconf/mcp"
+    },
+    "oreilly": {
+      "url": "https://api.oreilly.com/api/content-discovery/v1/mcp/",
+      "headers": {
+        "Authorization": "Bearer 3a6bdb98516ca52051616305c2c86606c1204e77"
+      }
+    },
+    "mysql-mcp": {
+      "type": "streamableHttp",
+      "url": "http://localhost:8080/mcp"
+    }
+  }
+}
