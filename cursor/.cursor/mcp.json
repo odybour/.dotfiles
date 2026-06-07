@@ -16,7 +16,6 @@
       }
     },
     "mysql-mcp": {
-      "type": "streamableHttp",
       "url": "http://localhost:8080/mcp"
     }
   }
