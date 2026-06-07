@@ -29,7 +29,7 @@
   },
   "notifications": true,
   "hints": true,
-  "rewind": false,
+  "rewind": true,
   "suggestNextPrompt": false,
   "statusLine": {
     "type": "command",
