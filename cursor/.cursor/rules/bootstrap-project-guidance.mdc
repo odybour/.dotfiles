@@ -1,0 +1,43 @@
+---
+description: Bootstrap project AI guidance on demand (Claude /init style)
+alwaysApply: true
+---
+
+# Bootstrap Project Guidance
+
+When the user asks to initialize AI guidance for a repository (for example: "init this project", "create AGENTS.md", "generate Cursor rules", "Claude /init equivalent"), do this workflow.
+
+## Workflow
+
+Scan this repository and generate project-specific guidance for the
+Cursor Agent. Read top-level config (package.json / pyproject.toml /
+go.mod / Cargo.toml / Makefile / Dockerfile / CI workflows), the README,
+and a representative sample of source files in each major directory.
+Then produce files under `.cursor/rules/` as `.mdc` files with proper
+frontmatter, following https://cursor.com/docs/rules.md. Split into
+focused rules (each < 500 lines). Suggested split:
+- `00-project-overview.mdc` (alwaysApply: true) — what the project is,
+tech stack, top-level architecture, key directories.
+- `10-build-test-run.mdc` (alwaysApply: true) — exact commands to
+install, build, lint, test, run locally; CI entry points.
+- `20-conventions.mdc` (alwaysApply: true) — naming, formatting,
+import order, error handling, logging conventions actually observed
+in the code.
+- `30-architecture.mdc` (description set, alwaysApply: false) — module
+boundaries, layering rules, where to add new features.
+- Per-area rules using `globs:` (e.g. `src/**/*.ts`, `tests/**`) for
+language- or layer-specific guidance.
+Rules:
+- Base everything on what's actually in the repo. Do NOT invent
+conventions; cite file paths as evidence in the rule body.
+- Prefer `@path/to/file` references over copying code.
+- Keep guidance actionable (do/don't), not generic style-guide filler.
+- Skip things linters/formatters already enforce.
+- Ask me before writing if you find conflicting conventions.
+After writing, list the files you created and a one-line summary of each.
+
+## Reusability
+
+If the user asks to repeat this across many projects, provide a reusable prompt template and suggest keeping this rule as a starter rule in new repositories.
+
+
