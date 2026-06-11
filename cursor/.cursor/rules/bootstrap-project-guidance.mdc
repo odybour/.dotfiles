@@ -18,7 +18,7 @@ frontmatter, following https://cursor.com/docs/rules.md. Split into
 focused rules (each < 500 lines). Suggested split:
 - `00-project-overview.mdc` (alwaysApply: true) — what the project is,
 tech stack, top-level architecture, key directories.
-- `10-build-test-run.mdc` (alwaysApply: true) — exact commands to
+- `10-build-test-run.mdc` (alwaysApply: false) — exact commands to
 install, build, lint, test, run locally; CI entry points. **Must
 include an explicit "validation loop" section** the agent can run
 after a change, in this shape:

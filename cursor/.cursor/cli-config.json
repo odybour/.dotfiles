@@ -27,6 +27,11 @@
   "editor": {
     "vimMode": true
   },
+  "display": {
+    "showLineNumbers": false,
+    "showThinkingBlocks": false,
+    "showStatusIndicators": false
+  },
   "notifications": true,
   "hints": true,
   "rewind": true,
@@ -37,15 +42,11 @@
     "padding": 2
   },
   "model": {
-    "modelId": "gpt-5.3-codex",
-    "displayModelId": "gpt-5.3-codex",
-    "displayName": "Codex 5.3 Medium",
-    "displayNameShort": "Codex 5.3 Medium",
-    "aliases": [
-      "codex-latest",
-      "codex",
-      "codex-5.3"
-    ],
+    "modelId": "claude-opus-4-7",
+    "displayModelId": "claude-opus-4-7",
+    "displayName": "Opus 4.7 (Thinking) 300K Extra High",
+    "displayNameShort": "Opus 4.7 (Thinking) 300K Extra High",
+    "aliases": [],
     "maxMode": false
   },
   "hasChangedDefaultModel": true,
@@ -140,11 +141,19 @@
     ]
   },
   "selectedModel": {
-    "modelId": "gpt-5.3-codex",
+    "modelId": "claude-opus-4-7",
     "parameters": [
       {
-        "id": "reasoning",
-        "value": "medium"
+        "id": "thinking",
+        "value": "true"
+      },
+      {
+        "id": "context",
+        "value": "300k"
+      },
+      {
+        "id": "effort",
+        "value": "xhigh"
       },
       {
         "id": "fast",
@@ -155,7 +164,7 @@
   "privacyCache": {
     "ghostMode": true,
     "privacyMode": 2,
-    "updatedAt": 1780824980044
+    "updatedAt": 1781078068093
   },
   "serverConfigCache": {
     "backendUrl": "https://api2.cursor.sh",
@@ -167,7 +176,7 @@
     },
     "cliSandboxDefaultEnabled": false,
     "serverHttp2Config": 0,
-    "updatedAt": 1780823714315
+    "updatedAt": 1781021980793
   },
   "authInfo": {
     "email": "odysseas.bournas@nokia.com",
@@ -180,12 +189,13 @@
   "network": {
     "useHttp1ForAgent": false
   },
-  "approvalMode": "allowlist",
+  "approvalMode": "unrestricted",
   "sandbox": {
     "mode": "disabled",
     "networkAccess": "user_config_with_defaults"
   },
-  "runEverythingSettingsPromptStreak": 1,
+  "showSandboxIntro": false,
+  "runEverythingSettingsPromptStreak": 0,
   "attribution": {
     "attributeCommitsToAgent": true,
     "attributePRsToAgent": true
