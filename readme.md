@@ -74,3 +74,14 @@ teams-for-linux %U --proxy-server=http://10.158.100.2:8080 --ozone-platform=wayl
 
 yay -S tree-sitter-cli
 
+# Cursor + Stow Notes
+
+`~/.cursor/cli-config.json` is intentionally not managed by GNU Stow.
+Cursor may rewrite/replace this file during normal operation, which can
+break symlink ownership and cause stow conflicts.
+
+The install script excludes `cli-config.json` from the `cursor` stow package
+and only manages stable Cursor assets:
+- skill packages under `~/.cursor/skills`
+- rule files under `~/.cursor/rules`
+
