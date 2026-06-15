@@ -1,5 +1,6 @@
 
 include /etc/sway/config.d/*
+include ~/.config/sway/conf.d/*.conf
 # Default config for sway
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
@@ -157,8 +158,8 @@ input type:keyboard {
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    #bindsym $mod+b splith
+    #bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
     bindsym $mod+bracketleft layout stacking
@@ -244,6 +245,8 @@ bindsym $mod+r mode "resize"
     # bindsym Print exec grim
     bindsym Print exec grim -g "$(slurp)" - | tee ~/Pictures/screenshot-$(uuidgen).png | wl-copy
 
+    # Voxtype
+    bindsym --no-repeat F9 exec voxtype record toggle
 #
 # Status Bar:
 #
