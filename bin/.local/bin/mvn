@@ -1,1 +1,3 @@
 devcon -- mvn "$@"
+#~/env/maven/bin/mvn "$@"
+
