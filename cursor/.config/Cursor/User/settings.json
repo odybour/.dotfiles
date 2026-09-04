@@ -77,5 +77,6 @@
     "workbench.colorTheme": "Darcula",
     "security.workspace.trust.enabled": true,
     "workbench.statusBar.visible": false,
-    "window.autoDetectColorScheme": false
+    "window.autoDetectColorScheme": false,
+    "security.workspace.trust.untrustedFiles": "open"
 }
