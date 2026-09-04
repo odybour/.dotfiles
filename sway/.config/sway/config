@@ -297,6 +297,9 @@ exec --no-startup-id google-chrome \
 
 for_window [title=".*Teams.*"] move container to workspace 10
 
+# --- AUTOSTART speech-to-text application voxtype ---
+#
+exec systemctl --user start voxtype.service
 
 #exec code
 #exec teams-proxy
