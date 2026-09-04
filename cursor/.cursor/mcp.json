@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "quarkus-agent": {
+      "type": "stdio",
+      "command": "/home/bournas/.local/bin/quarkus-agent-mcp"
+    },
     "EE JIRA JDC2 MCP": {
       "type": "streamableHttp",
       "url": "https://itatlas-mcp.int.net.nokia.com/jdc2/mcp",
