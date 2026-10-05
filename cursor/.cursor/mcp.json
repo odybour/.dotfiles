@@ -5,12 +5,12 @@
       "command": "/home/bournas/.local/bin/quarkus-agent-mcp"
     },
     "EE JIRA JDC2 MCP": {
-      "type": "streamableHttp",
+      "type": "http",
       "url": "https://itatlas-mcp.int.net.nokia.com/jdc2/mcp",
       "headers": {}
     },
     "EE CONFLUENCE MCP": {
-      "type": "streamableHttp",
+      "type": "http",
       "url": "https://itatlas-mcp.int.net.nokia.com/eeconf/mcp"
     },
     "oreilly": {
