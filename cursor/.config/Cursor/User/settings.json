@@ -57,8 +57,6 @@
         "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code"
     },
     "chat.viewSessions.orientation": "stacked",
-    "gitlens.ai.model": "vscode",
-    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
     "breadcrumbs.enabled": false,
     "editor.minimap.enabled": false,
     "search.searchOnType": false,

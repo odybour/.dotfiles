@@ -16,36 +16,18 @@ for folder in ${STOW_FOLDERS[@]}; do
 	#    Use adopt with caution! It will replace target files. Use `stow -nvt ~` to see the changes first.
 	#    stow --adopt -vt ~ $folder
 	if [ "$folder" = "cursor" ]; then
-		# Cursor skills/rules are linked below; cli-config is Cursor-managed mutable state.
-		stow --ignore='(skills|rules|cli-config\.json)$' -vt ~ $folder
+		# cursor/skills and cursor/rules are installed via cursor-skills-install; not stowed to ~/cursor/.
+		stow --ignore='^skills' --ignore='^rules' --ignore='cli-config\.json' -vt ~ $folder
 	else
 		stow -vt ~ $folder
 	fi
 done
 
-# Link Cursor skills directly into ~/.cursor/skills to avoid owning ~/.cursor/skills itself.
-if [ -d "cursor/.cursor/skills" ]; then
-	mkdir -p "$HOME/.cursor/skills"
-	for skill_path in cursor/.cursor/skills/*; do
-		if [ -d "$skill_path" ]; then
-			skill_name=$(basename "$skill_path")
-			echo Installing cursor skill $skill_name...
-			ln -sfn "$DOTFILES/$skill_path" "$HOME/.cursor/skills/$skill_name"
-		fi
-	done
+if ! command -v cursor-skills-install >/dev/null 2>&1; then
+	echo "error: cursor-skills-install not found on PATH (stow bin package first)" >&2
+	exit 1
 fi
-
-# Link Cursor rules directly into ~/.cursor/rules to avoid owning ~/.cursor/rules itself.
-if [ -d "cursor/.cursor/rules" ]; then
-	mkdir -p "$HOME/.cursor/rules"
-	for rule_file in cursor/.cursor/rules/*.mdc; do
-		if [ -f "$rule_file" ]; then
-			rule_name=$(basename "$rule_file")
-			echo Installing cursor rule $rule_name...
-			ln -sfn "$DOTFILES/$rule_file" "$HOME/.cursor/rules/$rule_name"
-		fi
-	done
-fi
+cursor-skills-install "$DOTFILES"
 echo Done!
 
 # Create system-wide symlinks only if needed

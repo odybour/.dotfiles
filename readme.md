@@ -80,8 +80,35 @@ yay -S tree-sitter-cli
 Cursor may rewrite/replace this file during normal operation, which can
 break symlink ownership and cause stow conflicts.
 
-The install script excludes `cli-config.json` from the `cursor` stow package
-and only manages stable Cursor assets:
-- skill packages under `~/.cursor/skills`
-- rule files under `~/.cursor/rules`
+The install script excludes `cli-config.json` and the package-local `skills/` and
+`rules/` trees from stow (they must not land under `~/cursor/`). Skills and rules
+are linked into `~/.cursor/skills` and `~/.cursor/rules` by
+`cursor-skills-install` (stowed from `bin/.local/bin/`).
+
+### Cursor skills layout (this repo and others)
+
+Any git repo can publish Cursor assets at:
+
+```text
+cursor/skills/<skill-name>/SKILL.md
+cursor/skills/<skill-name>/scripts/   # optional; tools the agent runs (paths relative to skill dir)
+cursor/rules/*.mdc                    # optional
+```
+
+### New machine
+
+1. Clone this repo and run `./install` from the dotfiles root.
+2. Install finishes with `cursor-skills-install "$DOTFILES"` (dotfiles skills + rules).
+
+### Other repos (e.g. java-perf-toolkit)
+
+After dotfiles install (so `cursor-skills-install` is on `PATH`):
+
+```bash
+cd /path/to/java-perf-toolkit
+cursor-skills-install
+```
+
+Re-run after adding skills. If two repos define the same skill name, the last
+install wins (`ln -sfn`).
 
