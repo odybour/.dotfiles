@@ -1,23 +1,39 @@
 #!/usr/bin/env bash
-# Symlink cursor/skills and cursor/rules from a git repo into ~/.cursor/skills and ~/.cursor/rules.
+# Symlink cursor/skills, cursor/rules, and cursor/agents from a git repo into CURSOR_HOME.
 set -euo pipefail
 
 usage() {
 	cat <<'EOF'
 Usage: cursor-skills-install [REPO_ROOT]
 
-Install Cursor skills and rules from a repository that contains:
+Install Cursor assets from a repository that contains (at least one):
   cursor/skills/<skill-name>/...
-  cursor/rules/*.mdc          (optional)
+  cursor/rules/*.mdc
+  cursor/agents/*.md
 
-REPO_ROOT defaults to git toplevel of $PWD, or $PWD if not in a git repo.
-Run from dotfiles after ./install, or from any repo (e.g. java-perf-toolkit).
+REPO_ROOT resolution when omitted:
+  1. Directory containing this script, if cursor/skills|rules|agents exists there
+  2. git rev-parse --show-toplevel
+  3. $PWD
+
+CURSOR_HOME defaults to $HOME/.cursor (override for tests or non-default install).
 EOF
+}
+
+script_has_cursor_tree() {
+	local dir="$1"
+	[[ -d "$dir/cursor/skills" || -d "$dir/cursor/rules" || -d "$dir/cursor/agents" ]]
 }
 
 resolve_repo_root() {
 	if [[ $# -ge 1 && -n "${1:-}" ]]; then
 		echo "$(cd "$1" && pwd)"
+		return
+	fi
+	local script_dir
+	script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	if script_has_cursor_tree "$script_dir"; then
+		echo "$script_dir"
 		return
 	fi
 	if git rev-parse --show-toplevel >/dev/null 2>&1; then
@@ -38,22 +54,24 @@ warn_if_broken() {
 }
 
 REPO_ROOT="$(resolve_repo_root "${1:-}")"
+CURSOR_HOME="${CURSOR_HOME:-$HOME/.cursor}"
 SKILLS_DIR="$REPO_ROOT/cursor/skills"
 RULES_DIR="$REPO_ROOT/cursor/rules"
+AGENTS_DIR="$REPO_ROOT/cursor/agents"
 
-if [[ ! -d "$SKILLS_DIR" && ! -d "$RULES_DIR" ]]; then
+if [[ ! -d "$SKILLS_DIR" && ! -d "$RULES_DIR" && ! -d "$AGENTS_DIR" ]]; then
 	usage >&2
-	echo "error: no cursor/skills or cursor/rules under $REPO_ROOT" >&2
+	echo "error: no cursor/skills, cursor/rules, or cursor/agents under $REPO_ROOT" >&2
 	exit 1
 fi
 
-mkdir -p "$HOME/.cursor/skills" "$HOME/.cursor/rules"
+mkdir -p "$CURSOR_HOME/skills" "$CURSOR_HOME/rules" "$CURSOR_HOME/agents"
 
 if [[ -d "$SKILLS_DIR" ]]; then
 	for skill_path in "$SKILLS_DIR"/*; do
 		[[ -d "$skill_path" ]] || continue
 		skill_name=$(basename "$skill_path")
-		dest="$HOME/.cursor/skills/$skill_name"
+		dest="$CURSOR_HOME/skills/$skill_name"
 		echo "Installing skill $skill_name from $REPO_ROOT ..."
 		ln -sfn "$skill_path" "$dest"
 		warn_if_broken "$dest" "skill"
@@ -64,7 +82,7 @@ if [[ -d "$RULES_DIR" ]]; then
 	shopt -s nullglob
 	for rule_path in "$RULES_DIR"/*.mdc; do
 		rule_name=$(basename "$rule_path")
-		dest="$HOME/.cursor/rules/$rule_name"
+		dest="$CURSOR_HOME/rules/$rule_name"
 		echo "Installing rule $rule_name from $REPO_ROOT ..."
 		ln -sfn "$rule_path" "$dest"
 		warn_if_broken "$dest" "rule"
@@ -72,4 +90,16 @@ if [[ -d "$RULES_DIR" ]]; then
 	shopt -u nullglob
 fi
 
-echo "Done ($REPO_ROOT)."
+if [[ -d "$AGENTS_DIR" ]]; then
+	shopt -s nullglob
+	for agent_path in "$AGENTS_DIR"/*.md; do
+		agent_name=$(basename "$agent_path")
+		dest="$CURSOR_HOME/agents/$agent_name"
+		echo "Installing agent $agent_name from $REPO_ROOT ..."
+		ln -sfn "$agent_path" "$dest"
+		warn_if_broken "$dest" "agent"
+	done
+	shopt -u nullglob
+fi
+
+echo "Done ($REPO_ROOT -> $CURSOR_HOME)."

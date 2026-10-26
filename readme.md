@@ -82,8 +82,9 @@ break symlink ownership and cause stow conflicts.
 
 The install script excludes `cli-config.json` and the package-local `skills/` and
 `rules/` trees from stow (they must not land under `~/cursor/`). Skills and rules
-are linked into `~/.cursor/skills` and `~/.cursor/rules` by
-`cursor-skills-install` (stowed from `bin/.local/bin/`).
+are linked into `~/.cursor/skills`, `~/.cursor/rules`, and (when present)
+`~/.cursor/agents` by `cursor-skills-install` (stowed from `bin/.local/bin/`).
+The installer honors `CURSOR_HOME` (default `~/.cursor`).
 
 ### Cursor skills layout (this repo and others)
 
@@ -93,6 +94,7 @@ Any git repo can publish Cursor assets at:
 cursor/skills/<skill-name>/SKILL.md
 cursor/skills/<skill-name>/scripts/   # optional; tools the agent runs (paths relative to skill dir)
 cursor/rules/*.mdc                    # optional
+cursor/agents/*.md                    # optional
 ```
 
 ### New machine
