@@ -1,8 +1,3 @@
----
-description: Bootstrap project AI guidance on demand (Claude /init style)
-alwaysApply: true
----
-
 # Bootstrap Project Guidance
 
 When the user asks to initialize AI guidance for a repository (for example: "init this project", "create AGENTS.md", "generate Cursor rules", "Claude /init equivalent"), do this workflow.

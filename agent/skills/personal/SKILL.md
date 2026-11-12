@@ -1,22 +1,22 @@
 ---
-name: work
+name: personal
 description: >-
-  Personal work journal over ~/programming/aux/nokia-notes/notes.adoc.
-  Use for /work, "what am I forgetting", "what should I work on now",
-  "I finished …", "I also need to …", /work add, /work update, /work remove,
-  /work history, date/history queries. Today-editable lines (TODO:: / DONE:: / ONGOING::);
-  past days immutable. Not for /personal or personal-notes. Not a task manager — do not use todos/ files or Jira for this workflow.
+  Personal-project journal over ~/programming/aux/personal-notes/notes.adoc.
+  Use for /personal, personal journal, personal-notes, side project log,
+  "what am I forgetting" (personal), /personal add, update, remove, history.
+  Today-editable lines (TODO:: / DONE:: / ONGOING::); past days immutable.
+  Not for /work or nokia-notes. Not a task manager — no todos/ or Jira.
 ---
 
-# Work — personal journal organizer
+# Personal — side-project journal organizer
 
-`notes.adoc` is a chronological work journal.
-`/work` produces an **AI-inferred current view** over that history.
+`notes.adoc` under personal-notes is a chronological journal for personal projects.
+`/personal` produces an **AI-inferred current view** over that history.
 
 ## Journal
 
 ```
-JOURNAL="$HOME/programming/aux/nokia-notes/notes.adoc"
+JOURNAL="$HOME/programming/aux/personal-notes/notes.adoc"
 ```
 
 Recent sections use `== YYYY-MM-DD` with **AsciiDoc description-list status lines**
@@ -36,9 +36,9 @@ File legend (top of journal):
 One line per item under today's section:
 
 ```asciidoc
-TODO:: Continue Quarkus native stress tests on the cluster.
-DONE:: Built native IPFIX FE collector on Quarkus…
-ONGOING:: Compare Karaf FE with Serial GC vs native Quarkus.
+TODO:: Wire up auth for the hobby API.
+DONE:: Shipped v0.1 of the dotfiles sync script.
+ONGOING:: Refactor the personal-notes Cursor skill.
 ```
 
 The `::` is AsciiDoc description-list syntax (term + description). Do not use `* ` bullets
@@ -75,18 +75,26 @@ the scripts above.
 When something from a past day is finished or dropped, append under **today**:
 
 ```bash
-"$SCRIPT" --done "Finished the CI build."
+"$SCRIPT" --done "Finished the README draft."
 ```
 
 ### Other
 
-- **Never** create Jira tickets, update Jira, or write to `todos/` domain files.
+- **Never** write to `~/programming/aux/nokia-notes/` or use the `work` skill's journal.
+- **Never** create Jira tickets or write to `todos/` under personal-notes.
 
 ## Not a task manager
 
-This skill is **not** `add-todo` or `get-todos-sorted`. Those skills manage
-`~/programming/aux/nokia-notes/todos/<domain>.adoc`. The journal is separate.
-Do not cross-write between them.
+This skill is **not** Nokia `add-todo` or `get-todos-sorted`. Do not create or use
+`personal-notes/todos/` for this workflow.
+
+## Ambiguous routing
+
+If the user logs work without `/personal` or `/work`:
+
+- Workspace is `personal-notes`, or they mention personal / side project → this skill.
+- They use `/work`, nokia-notes, or Nokia work context → `work` skill.
+- Otherwise ask which journal.
 
 ---
 
@@ -96,16 +104,16 @@ Classify the user message, then act:
 
 | Intent | Triggers (examples) | Action |
 |--------|---------------------|--------|
-| **view** | `/work`, "what should I work on", "status", "what's on my plate" | Read journal → infer → output view |
-| **add** | `/work add: …`, "I also need to …", "note that …", "log …" | `append-entry.sh` → `TODO::` |
-| **update** | `/work update …`, "change today's …", reword a today item | `replace` (preserve status unless flags say otherwise) |
-| **status** | "mark … ONGOING", "start …" | `replace --ongoing` |
-| **remove** | "no longer need to …", "drop …", "remove … from today" | `remove` |
-| **complete** | "I finished …", "done with …", "completed …" | Today's line → `replace --done`; else `append-entry.sh --done` |
-| **history** | `/work history`, `/work 2026-10-06`, "last week" | Read matching sections → summarize (no writes) |
-| **forget** | `/work what am I forgetting?` | View with emphasis on stale active items |
-| **prioritize** | `/work what should I work on now?` | View ranked by urgency/recency |
-| **close** | `/work close`, "wrap up" | Session summary in chat only; append only if user gives explicit closing text |
+| **view** | `/personal`, "personal status", "what's on my plate" (personal) | Read journal → infer → output view |
+| **add** | `/personal add: …`, "log for personal …", "note in personal journal …" | `append-entry.sh` → `TODO::` |
+| **update** | `/personal update …`, "change today's …" (personal) | `replace` (preserve status unless flags say otherwise) |
+| **status** | "mark … ONGOING" (personal context) | `replace --ongoing` |
+| **remove** | "drop … from today" (personal) | `remove` |
+| **complete** | "I finished …" (personal / `/personal`) | Today's line → `replace --done`; else `append-entry.sh --done` |
+| **history** | `/personal history`, `/personal 2026-10-06`, "last week" (personal) | Read matching sections → summarize (no writes) |
+| **forget** | `/personal what am I forgetting?` | View with emphasis on stale active items |
+| **prioritize** | `/personal what should I work on now?` | View ranked by urgency/recency |
+| **close** | `/personal close`, "wrap up" (personal session) | Session summary in chat only; append only if user gives explicit closing text |
 
 Natural language is fine — do not require exact command syntax.
 
@@ -116,9 +124,9 @@ line body (case-insensitive), not the `TODO::` prefix. If ambiguous, run `list` 
 
 ## Read strategy
 
-Avoid loading the full ~5k-line file unless the query is broad ("all history").
+Avoid loading the full file unless the query is broad ("all history").
 
-**Default view (`/work`):**
+**Default view (`/personal`):**
 
 1. List date sections: `rg '^== ' "$JOURNAL" | tail -30`
 2. Read the last ~21 days of sections (from the newest `==` heading backward).
@@ -144,15 +152,14 @@ on today's lines.** Older entries may use legacy markers.
 ### Completed
 
 - Line starts with `DONE::`
-- Legacy: `Finished …`, `completed`, `sent`, `replied`, or suffix `— DONE`
+- Legacy: `Finished …`, `completed`, `shipped`, `released`, or suffix `— DONE`
 - A later dated entry explicitly says the item is done
 
 ### Still active
 
 - Line starts with `TODO::` or `ONGOING::`
 - Legacy: imperatives (`need to`, `must`, …), suffix `— ONGOING`
-- Urgency: `Very important`, `!!`, deadlines (`before review`)
-- People + commitment: `With Stamatis`, `Answer Peter`, …
+- Urgency: `Very important`, `!!`, deadlines (`before launch`)
 - No later completion signal and line not removed
 
 ### Easy to forget
@@ -164,9 +171,8 @@ on today's lines.** Older entries may use legacy markers.
 
 ### Longer-running threads
 
-- Same theme, epic, ticket, or person across 2+ date sections
-- Examples: optimization epic FNMS-195097, FOSS, calculator deployment,
-  Quarkus migration, IPFIX load generator
+- Same theme, repo, or project name across 2+ date sections
+- Examples: dotfiles sync, a hobby app release, scaffolding setup
 
 ### Important today
 
@@ -183,7 +189,7 @@ Use markdown (not AsciiDoc). Include today's date in the title.
 Group today's items by status when the section uses `TODO::` / `DONE::` / `ONGOING::`.
 
 ```markdown
-# Work — YYYY-MM-DD
+# Personal — YYYY-MM-DD
 
 ## Suggested focus
 (only for prioritize intent)
@@ -223,18 +229,18 @@ a closing note (then `append-entry.sh`).
 Resolve script paths relative to this skill:
 
 ```
-SCRIPT="$HOME/.cursor/skills/work/scripts/append-entry.sh"
-UPDATE="$HOME/.cursor/skills/work/scripts/update-today-entry.sh"
+SCRIPT="$HOME/.agent/skills/personal/scripts/append-entry.sh"
+UPDATE="$HOME/.agent/skills/personal/scripts/update-today-entry.sh"
 ```
 
-(or `~/.cursor/skills/work/scripts/…` when symlinked)
+(or `~/.agent/skills/personal/scripts/…` when symlinked)
 
 ### Add (default `TODO::`)
 
 ```bash
-"$SCRIPT" "investigate the IPFIX load generator"
-"$SCRIPT" --ongoing "Compare Karaf with Serial GC"
-"$SCRIPT" --done "Finished the CI build."   # completions from a past day
+"$SCRIPT" "add retry logic to the hobby API client"
+"$SCRIPT" --ongoing "Draft personal skill SKILL.md"
+"$SCRIPT" --done "Finished the README draft."   # completions from a past day
 ```
 
 ### Update today (replace text)
@@ -243,16 +249,16 @@ Preserves existing `TODO::` / `ONGOING::` / `DONE::` unless you pass a status fl
 or the new text already starts with `DONE::` / `TODO::` / `ONGOING::`.
 
 ```bash
-"$UPDATE" replace "CI build" "Execute a CI build in quarkus migration FB"
-"$UPDATE" replace --ongoing "CI build" "Execute a CI build in quarkus migration FB"
-"$UPDATE" replace --done "CI build" "Finished the CI build."
-"$UPDATE" replace "CI build" "DONE:: Finished the CI build."
+"$UPDATE" replace "README" "Expand README with install steps"
+"$UPDATE" replace --ongoing "README" "Expand README with install steps"
+"$UPDATE" replace --done "README" "Finished the README draft."
+"$UPDATE" replace "README" "DONE:: Finished the README draft."
 ```
 
 ### Remove from today
 
 ```bash
-"$UPDATE" remove "review a new document"
+"$UPDATE" remove "spike old auth approach"
 ```
 
 ### List today's lines
@@ -266,47 +272,47 @@ or the new text already starts with `DONE::` / `TODO::` / `ONGOING::`.
 **Item already in today's section** — set status to done (keep or shorten body):
 
 ```bash
-"$UPDATE" replace --done "CI build" "Finished the CI build."
+"$UPDATE" replace --done "README" "Finished the README draft."
 ```
 
 **Item from an earlier day** — append under today; do not edit the old line:
 
 ```bash
-"$SCRIPT" --done "Finished the CI build."
+"$SCRIPT" --done "Finished the README draft."
 ```
 
 Rules for entry text:
 
 - Single line; collapse internal newlines to spaces
 - Pass **body text only** to scripts (no `TODO::` prefix unless you intend to set status explicitly)
-- Preserve the user's phrasing for completions (`Finished …`, `Sent …`, etc.)
+- Preserve the user's phrasing for completions (`Finished …`, `Shipped …`, etc.)
 
 ---
 
 ## Examples
 
-**`/work`** → produce the default view from recent sections; split today by status when present.
+**`/personal`** → produce the default view from recent sections; split today by status when present.
 
-**`/work add: investigate the IPFIX load generator`**
-→ `TODO:: investigate the IPFIX load generator`
+**`/personal add: wire up CI for personal-notes repo`**
+→ `TODO:: wire up CI for personal-notes repo`
 
-**`I finished the CI build.`** (today's line was `ONGOING:: Execute a CI build …`)
-→ `replace --done "CI build" "Finished the CI build."`
+**`I finished the README draft.`** (today's line was `ONGOING:: Expand README …`)
+→ `replace --done "README" "Finished the README draft."`
 
-**`I no longer need to review the new document.`**
-→ `remove "review a new document"`
+**`I no longer need to spike the old auth approach.`**
+→ `remove "spike old auth approach"`
 
-**`/work update: mark Peter's document review as ONGOING`**
-→ `replace --ongoing "Peter's document" "Review Peter's document (must be done before review)"`
+**`/personal update: mark dotfiles sync as ONGOING`**
+→ `replace --ongoing "dotfiles sync" "Dotfiles sync — finish rsync excludes"`
 
-**`/work history optimization`**
-→ summarize FNMS-195097 / footprint / GC threads across matching dates.
+**`/personal history dotfiles`**
+→ summarize dotfiles-related entries across matching dates.
 
-**`/work 2026-10-02`**
+**`/personal 2026-10-02`**
 → recap that day only.
 
-**`/work what am I forgetting?`**
-→ emphasize stale items (calculator FOSS/deployment, AI SDLC, etc.).
+**`/personal what am I forgetting?`**
+→ emphasize stale personal-project items.
 
-**`/work close`**
+**`/personal close`**
 → end-of-session summary in chat; no file write unless user supplies text to log.
