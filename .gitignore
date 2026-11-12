@@ -69,3 +69,6 @@ vscode
 k9s
 /bin/.local/bin/agent
 /bin/.local/bin/cursor-agent
+/bin/.local/bin/claude
+/bin/.local/bin/uv
+/bin/.local/bin/uvx
