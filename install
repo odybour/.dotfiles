@@ -28,6 +28,10 @@ if ! command -v agent-install >/dev/null 2>&1; then
 	exit 1
 fi
 agent-install "$DOTFILES"
+# Optional: expose Cursor's Launchpad plugins to Claude Code (skips quietly when absent).
+if command -v launchpad-claude >/dev/null 2>&1 && [ -d "$HOME/.cursor/plugins/cache/kairosaica-launchpad" ]; then
+	launchpad-claude || echo "warning: launchpad-claude failed" >&2
+fi
 echo Done!
 
 # Create system-wide symlinks only if needed

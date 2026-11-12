@@ -109,6 +109,22 @@ agent/<package>/{skills,rules,agents}/...   # same, grouped per package
 reference their scripts without naming a tool. Do not hand-edit the generated `.mdc`
 files; edit `agent/rules/<rule>.md` and re-run `agent-install`.
 
+### Cursor Launchpad plugins in Claude Code
+
+`launchpad-claude` (stowed from `bin/.local/bin/`) converts the Launchpad plugins that
+Cursor caches in `~/.cursor/plugins/cache/kairosaica-launchpad/` into a local Claude
+marketplace at `~/.claude/launchpad/` (copies, because Claude rejects symlinks that
+leave the plugin directory) and writes the `.mdc` rules to `~/.claude/rules/launchpad-*.md`.
+Skills and agents work; Cursor hooks (goal-lock gates, detect-secrets, `[cursor-assisted]`
+commit marking) are not ported. One-time setup, then re-run `launchpad-claude` after
+Cursor updates the plugins:
+
+```bash
+launchpad-claude
+claude plugin marketplace add ~/.claude/launchpad
+claude plugin install scaffold-core@launchpad   # likewise scaffold-dev/-product/-security/-qa
+```
+
 ### New machine
 
 1. Clone this repo and run `./install` from the dotfiles root.
