@@ -16,18 +16,18 @@ for folder in ${STOW_FOLDERS[@]}; do
 	#    Use adopt with caution! It will replace target files. Use `stow -nvt ~` to see the changes first.
 	#    stow --adopt -vt ~ $folder
 	if [ "$folder" = "cursor" ]; then
-		# cursor/skills and cursor/rules are installed via cursor-skills-install; not stowed to ~/cursor/.
-		stow --ignore='^skills' --ignore='^rules' --ignore='cli-config\.json' -vt ~ $folder
+		# Cursor-specific config only; skills/rules/agents live in agent/ (see agent-install).
+		stow --ignore='cli-config\.json' -vt ~ $folder
 	else
 		stow -vt ~ $folder
 	fi
 done
 
-if ! command -v cursor-skills-install >/dev/null 2>&1; then
-	echo "error: cursor-skills-install not found on PATH (stow bin package first)" >&2
+if ! command -v agent-install >/dev/null 2>&1; then
+	echo "error: agent-install not found on PATH (stow bin package first)" >&2
 	exit 1
 fi
-cursor-skills-install "$DOTFILES"
+agent-install "$DOTFILES"
 echo Done!
 
 # Create system-wide symlinks only if needed

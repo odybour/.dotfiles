@@ -67,5 +67,5 @@ vscode
 !vscode/.config/Code/User/settings.json
 
 k9s
-agent
-cursor-agent
+/bin/.local/bin/agent
+/bin/.local/bin/cursor-agent

@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+# Install tool-neutral agent assets from a git repo into Cursor and Claude Code.
+set -euo pipefail
+
+usage() {
+	cat <<'USAGE'
+Usage: agent-install [REPO_ROOT]
+
+Install agent assets from a directory ROOT whose assets live either directly in it
+or in its agent/ subdirectory (at least one of):
+  skills/<skill-name>/SKILL.md            (+ optional scripts/)
+  rules/<rule>.md                         (+ optional <rule>.cursor sidecar)
+  agents/<agent>.md
+or the same three folders one level deeper, per package:
+  <package>/{skills,rules,agents}/...
+
+Targets:
+  skills  -> $CURSOR_HOME/skills, $CLAUDE_HOME/skills, $AGENT_HOME/skills (symlinks)
+  agents  -> $CURSOR_HOME/agents, $CLAUDE_HOME/agents (symlinks)
+  rules   -> $CLAUDE_HOME/rules/<rule>.md (symlink)
+             $CURSOR_HOME/rules/<rule>.mdc (generated: sidecar frontmatter + body)
+
+The sidecar <rule>.cursor holds Cursor frontmatter lines (description, alwaysApply,
+globs) without the --- fences. Without a sidecar the rule gets "alwaysApply: true".
+
+Defaults: CURSOR_HOME=$HOME/.cursor  CLAUDE_HOME=$HOME/.claude  AGENT_HOME=$HOME/.agent
+Skills should reference scripts as $AGENT_HOME/skills/<name>/scripts/... (tool neutral).
+
+ROOT resolution when omitted: directory of this script (if it has skills|rules|agents
+or agent/), then git toplevel, then $PWD.
+USAGE
+}
+
+has_agent_tree() {
+	[[ -d "$1/agent" || -d "$1/skills" || -d "$1/rules" || -d "$1/agents" ]]
+}
+
+resolve_repo_root() {
+	if [[ $# -ge 1 && -n "${1:-}" ]]; then
+		(cd "$1" && pwd)
+		return
+	fi
+	local script_dir
+	script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	if has_agent_tree "$script_dir"; then
+		echo "$script_dir"
+		return
+	fi
+	if git rev-parse --show-toplevel >/dev/null 2>&1; then
+		git rev-parse --show-toplevel
+		return
+	fi
+	pwd
+}
+
+case "${1:-}" in -h | --help) usage; exit 0 ;; esac
+
+REPO_ROOT="$(resolve_repo_root "${1:-}")"
+CURSOR_HOME="${CURSOR_HOME:-$HOME/.cursor}"
+CLAUDE_HOME="${CLAUDE_HOME:-$HOME/.claude}"
+AGENT_HOME="${AGENT_HOME:-$HOME/.agent}"
+AGENT_DIR="$REPO_ROOT"
+[[ -d "$REPO_ROOT/agent" ]] && AGENT_DIR="$REPO_ROOT/agent"
+
+if ! has_agent_tree "$REPO_ROOT"; then
+	usage >&2
+	echo "error: no agent/, skills/, rules/ or agents/ under $REPO_ROOT" >&2
+	exit 1
+fi
+
+# Collect asset directories: agent/<kind> and agent/<package>/<kind>.
+kind_dirs() {
+	local kind="$1" d
+	[[ -d "$AGENT_DIR/$kind" ]] && echo "$AGENT_DIR/$kind"
+	for d in "$AGENT_DIR"/*/"$kind"; do
+		[[ -d "$d" ]] && echo "$d"
+	done
+	return 0
+}
+
+link() { # link SRC DEST LABEL
+	mkdir -p "$(dirname "$2")"
+	if [[ -e "$2" && ! -L "$2" ]]; then
+		echo "warning: $2 exists and is not a symlink; skipped" >&2
+		return
+	fi
+	ln -sfn "$1" "$2"
+	[[ -e "$2" ]] || echo "warning: broken $3 $2" >&2
+}
+
+# Remove dangling symlinks into this repo left by an older layout.
+prune_stale() {
+	local dir="$1" l t
+	[[ -d "$dir" ]] || return 0
+	for l in "$dir"/*; do
+		[[ -L "$l" && ! -e "$l" ]] || continue
+		t="$(readlink "$l")"
+		if [[ "$t" == "$REPO_ROOT"/* ]]; then
+			echo "Removing stale link $l -> $t"
+			rm -f "$l"
+		fi
+	done
+}
+
+# Rules: reject name clashes silently-overwriting each other is fine (last install wins).
+gen_cursor_rule() { # gen_cursor_rule RULE_MD DEST_MDC
+	local md="$1" mdc="$2" sidecar="${1%.md}.cursor"
+	mkdir -p "$(dirname "$mdc")"
+	[[ -L "$mdc" ]] && rm -f "$mdc" # never write through an old symlink into a repo
+	{
+		echo "---"
+		if [[ -f "$sidecar" ]]; then
+			cat "$sidecar"
+		else
+			echo "alwaysApply: true"
+		fi
+		echo "---"
+		echo
+		cat "$md"
+	} >"$mdc"
+}
+
+while IFS= read -r skills_dir; do
+	for p in "$skills_dir"/*/; do
+		[[ -f "${p}SKILL.md" ]] || continue
+		p="${p%/}"; name="$(basename "$p")"
+		echo "Installing skill $name from $REPO_ROOT ..."
+		link "$p" "$CURSOR_HOME/skills/$name" skill
+		link "$p" "$CLAUDE_HOME/skills/$name" skill
+		link "$p" "$AGENT_HOME/skills/$name" skill
+	done
+done < <(kind_dirs skills)
+
+while IFS= read -r agents_dir; do
+	for p in "$agents_dir"/*.md; do
+		[[ -f "$p" ]] || continue
+		name="$(basename "$p")"
+		echo "Installing agent $name from $REPO_ROOT ..."
+		link "$p" "$CURSOR_HOME/agents/$name" agent
+		link "$p" "$CLAUDE_HOME/agents/$name" agent
+	done
+done < <(kind_dirs agents)
+
+while IFS= read -r rules_dir; do
+	for p in "$rules_dir"/*.md; do
+		[[ -f "$p" ]] || continue
+		base="$(basename "$p" .md)"
+		echo "Installing rule $base from $REPO_ROOT ..."
+		link "$p" "$CLAUDE_HOME/rules/$base.md" rule
+		gen_cursor_rule "$p" "$CURSOR_HOME/rules/$base.mdc"
+	done
+done < <(kind_dirs rules)
+
+for kind in skills agents rules; do
+	prune_stale "$CURSOR_HOME/$kind"
+	prune_stale "$CLAUDE_HOME/$kind"
+	prune_stale "$AGENT_HOME/$kind"
+done
+
+echo "Done ($REPO_ROOT -> $CURSOR_HOME, $CLAUDE_HOME, $AGENT_HOME)."

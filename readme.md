@@ -80,36 +80,50 @@ yay -S tree-sitter-cli
 Cursor may rewrite/replace this file during normal operation, which can
 break symlink ownership and cause stow conflicts.
 
-The install script excludes `cli-config.json` and the package-local `skills/` and
-`rules/` trees from stow (they must not land under `~/cursor/`). Skills and rules
-are linked into `~/.cursor/skills`, `~/.cursor/rules`, and (when present)
-`~/.cursor/agents` by `cursor-skills-install` (stowed from `bin/.local/bin/`).
-The installer honors `CURSOR_HOME` (default `~/.cursor`).
+The install script excludes `cli-config.json` from stow. Skills, rules and agents are
+tool neutral and live under `agent/`, not under `cursor/` (which only holds Cursor-specific
+config). They are installed by `agent-install` (stowed from `bin/.local/bin/`) into both
+Cursor and Claude Code. Honors `CURSOR_HOME` (default `~/.cursor`), `CLAUDE_HOME`
+(default `~/.claude`) and `AGENT_HOME` (default `~/.agent`).
 
-### Cursor skills layout (this repo and others)
+### Agent assets layout (this repo and others)
 
-Any git repo can publish Cursor assets at:
+Any git repo can publish assets at:
 
 ```text
-cursor/skills/<skill-name>/SKILL.md
-cursor/skills/<skill-name>/scripts/   # optional; tools the agent runs (paths relative to skill dir)
-cursor/rules/*.mdc                    # optional
-cursor/agents/*.md                    # optional
+agent/skills/<skill-name>/SKILL.md
+agent/skills/<skill-name>/scripts/   # optional; reference as ~/.agent/skills/<skill-name>/scripts/...
+agent/rules/<rule>.md                # body only, no frontmatter (Claude Code reads it as is)
+agent/rules/<rule>.cursor            # optional sidecar: Cursor frontmatter lines (description, alwaysApply, globs)
+agent/agents/*.md                    # optional
+agent/<package>/{skills,rules,agents}/...   # same, grouped per package
 ```
+
+| Asset  | Cursor                                   | Claude Code                    |
+|--------|------------------------------------------|--------------------------------|
+| skill  | `~/.cursor/skills/<name>` (symlink)      | `~/.claude/skills/<name>` (symlink) |
+| agent  | `~/.cursor/agents/<f>.md` (symlink)      | `~/.claude/agents/<f>.md` (symlink) |
+| rule   | `~/.cursor/rules/<rule>.mdc` (generated: sidecar frontmatter + body; `alwaysApply: true` if no sidecar) | `~/.claude/rules/<rule>.md` (symlink) |
+
+`~/.agent/skills/<name>` is a tool-neutral link to each skill so `SKILL.md` files can
+reference their scripts without naming a tool. Do not hand-edit the generated `.mdc`
+files; edit `agent/rules/<rule>.md` and re-run `agent-install`.
 
 ### New machine
 
 1. Clone this repo and run `./install` from the dotfiles root.
-2. Install finishes with `cursor-skills-install "$DOTFILES"` (dotfiles skills + rules).
+2. Install finishes with `agent-install "$DOTFILES"` (dotfiles skills, rules, agents).
 
 ### Other repos (e.g. java-perf-toolkit)
 
-After dotfiles install (so `cursor-skills-install` is on `PATH`):
+After dotfiles install (so `agent-install` is on `PATH`):
 
 ```bash
 cd /path/to/java-perf-toolkit
-cursor-skills-install
+agent-install
 ```
+
+(`cursor-skills-install` still works as a deprecated alias.)
 
 Re-run after adding skills. If two repos define the same skill name, the last
 install wins (`ln -sfn`).
