@@ -1,0 +1,324 @@
+#!/usr/bin/env bash
+#
+# buildenv - run build tools in the build environment of the current project.
+#
+# The environment (profile) is picked by the nearest `.buildenv` file found walking up from the
+# current directory, or by $BUILDENV_PROFILE. The file holds a single profile name; profiles live
+# in ~/.config/buildenv/profiles/<name>.env. Without a profile, tools run on the host unchanged.
+#
+# Invoked through a symlink named after a tool (mvn, npm, helm, gradle) it runs that tool:
+#   cd ~/code/some-repo && mvn clean install    # -> runs inside the profile's build container
+# Invoked as `buildenv` it offers subcommands, see `buildenv help`.
+
+set -euo pipefail
+
+BUILDENV_HOME="${BUILDENV_HOME:-${XDG_CONFIG_HOME:-$HOME/.config}/buildenv}"
+PROFILES_DIR="$BUILDENV_HOME/profiles"
+MARKER_NAME=".buildenv"
+PROFILE=""
+PROFILE_SOURCE=""
+SELF="$(readlink -f "${BASH_SOURCE[0]}")"
+# Cross-process locking of the local repository, so parallel builds sharing it don't corrupt it.
+LOCK_ARGS="-Daether.syncContext.named.factory=file-lock -Daether.syncContext.named.nameMapper=file-gav"
+CONTAINER_FORWARD_ENV=(MAVEN_ARGS)
+PROFILE_VARS=(BUILDENV_MODE BUILDENV_CONTAINER BUILDENV_EXPORT BUILDENV_LOCAL_REPO BUILDENV_JDK
+  BUILDENV_MAVEN_HOME BUILDENV_SETTINGS BUILDENV_TOOLCHAINS BUILDENV_JAVA_HOME)
+
+die() {
+  echo "buildenv: $*" >&2
+  exit 1
+}
+
+usage() {
+  cat <<EOF
+Usage:
+  <tool> [args...]               mvn, npm, helm, gradle symlinked to buildenv run in the project's profile
+  buildenv run <cmd> [args...]   run any command (e.g. ./gradlew, java) in the project's profile
+  buildenv which                 show the profile that applies to the current directory
+  buildenv list                  list available profiles
+  buildenv ide                   print host IDE (IntelliJ) Maven settings for the current project
+  buildenv export [profile]      copy Maven home, settings.xml, toolchains.xml from the profile's
+                                 container to its host export directory (for host IDEs)
+
+Profile selection: \$BUILDENV_PROFILE, else the nearest $MARKER_NAME at or above \$PWD.
+Profiles: $PROFILES_DIR/<name>.env
+
+Profile variables:
+  BUILDENV_MODE        container | host
+  BUILDENV_CONTAINER   container to run commands in (container mode)
+  BUILDENV_EXPORT      host dir with maven/, settings.xml, toolchains.xml (defaults for the next three)
+  BUILDENV_MAVEN_HOME  Maven home used in host mode and by host IDEs
+  BUILDENV_SETTINGS    settings.xml (passed with -s in host mode)
+  BUILDENV_TOOLCHAINS  toolchains.xml (passed with -t in host mode)
+  BUILDENV_LOCAL_REPO  host path of the local repository
+  BUILDENV_JDK         suggested IDE project SDK
+  BUILDENV_JAVA_HOME   JAVA_HOME for host-mode commands (optional)
+  any other variable (e.g. GRADLE_USER_HOME) is exported to host-mode commands
+EOF
+}
+
+reset_profile_env() {
+  unset "${PROFILE_VARS[@]}"
+}
+
+# Prints the nearest marker file at or above $1.
+find_marker() {
+  local dir="$1"
+  while :; do
+    if [[ -f "$dir/$MARKER_NAME" ]]; then
+      printf '%s\n' "$dir/$MARKER_NAME"
+      return 0
+    fi
+    [[ "$dir" != "/" ]] || return 1
+    dir="$(dirname "$dir")"
+  done
+}
+
+read_marker() {
+  local name
+  name="$(grep -v -E '^[[:space:]]*(#|$)' "$1" | head -n1 | tr -d '[:space:]' || true)"
+  [[ -n "$name" ]] || die "no profile name in $1"
+  printf '%s\n' "$name"
+}
+
+# Sets PROFILE and PROFILE_SOURCE; an empty PROFILE means no profile applies.
+resolve_profile() {
+  PROFILE=""
+  PROFILE_SOURCE=""
+  if [[ -n "${BUILDENV_PROFILE:-}" ]]; then
+    PROFILE="$BUILDENV_PROFILE"
+    PROFILE_SOURCE='$BUILDENV_PROFILE'
+    return
+  fi
+  local marker
+  if marker="$(find_marker "$PWD")"; then
+    PROFILE="$(read_marker "$marker")"
+    PROFILE_SOURCE="$marker"
+  fi
+}
+
+load_profile() {
+  local file="$PROFILES_DIR/$1.env"
+  [[ -f "$file" ]] || die "unknown profile '$1' (no $file); see: buildenv list"
+  reset_profile_env
+  export BUILDENV_HOME
+  set -a
+  # shellcheck source=/dev/null
+  source "$file"
+  set +a
+  case "${BUILDENV_MODE:-}" in
+  container) [[ -n "${BUILDENV_CONTAINER:-}" ]] || die "profile '$1': BUILDENV_CONTAINER is not set" ;;
+  host) ;;
+  *) die "profile '$1': BUILDENV_MODE must be 'container' or 'host'" ;;
+  esac
+  if [[ -n "${BUILDENV_EXPORT:-}" ]]; then
+    : "${BUILDENV_MAVEN_HOME:=$BUILDENV_EXPORT/maven}"
+    : "${BUILDENV_SETTINGS:=$BUILDENV_EXPORT/settings.xml}"
+    : "${BUILDENV_TOOLCHAINS:=$BUILDENV_EXPORT/toolchains.xml}"
+  fi
+}
+
+require_profile() {
+  resolve_profile
+  [[ -n "$PROFILE" ]] || die "no $MARKER_NAME at or above $PWD and \$BUILDENV_PROFILE is not set"
+  load_profile "$PROFILE"
+}
+
+compose_maven_args() {
+  local args="$LOCK_ARGS"
+  if [[ "$BUILDENV_MODE" == host ]]; then
+    if [[ -n "${BUILDENV_SETTINGS:-}" ]]; then args+=" -s $BUILDENV_SETTINGS"; fi
+    if [[ -n "${BUILDENV_TOOLCHAINS:-}" ]]; then args+=" -t $BUILDENV_TOOLCHAINS"; fi
+    if [[ -n "${BUILDENV_LOCAL_REPO:-}" ]]; then args+=" -Dmaven.repo.local=$BUILDENV_LOCAL_REPO"; fi
+  fi
+  local caller="${MAVEN_ARGS:-}"
+  # A parent buildenv call (e.g. a build spawning mvn) may already have applied them.
+  if [[ " $caller " == *" $args "* ]]; then
+    export MAVEN_ARGS="$caller"
+  else
+    export MAVEN_ARGS="$args${caller:+ $caller}"
+  fi
+}
+
+find_host_binary() {
+  local cmd="$1" dir candidate
+  if [[ "$cmd" == mvn && -n "${BUILDENV_MAVEN_HOME:-}" ]]; then
+    candidate="$BUILDENV_MAVEN_HOME/bin/mvn"
+    [[ -x "$candidate" ]] || die "no Maven at $candidate (profile '$PROFILE'; populate it with: buildenv export <container profile>)"
+    printf '%s\n' "$candidate"
+    return
+  fi
+  if [[ "$cmd" == */* ]]; then
+    printf '%s\n' "$cmd"
+    return
+  fi
+  local IFS=:
+  for dir in $PATH; do
+    candidate="${dir:-.}/$cmd"
+    if [[ -x "$candidate" && ! -d "$candidate" && ! "$candidate" -ef "$SELF" ]]; then
+      printf '%s\n' "$candidate"
+      return
+    fi
+  done
+  die "'$cmd' not found on the host PATH"
+}
+
+container_running() {
+  [[ "$(docker inspect -f '{{.State.Running}}' "$1" 2>/dev/null || true)" == true ]]
+}
+
+run_host() {
+  local cmd="$1" bin
+  shift
+  bin="$(find_host_binary "$cmd")"
+  if [[ -n "${BUILDENV_JAVA_HOME:-}" ]]; then
+    export JAVA_HOME="$BUILDENV_JAVA_HOME" PATH="$BUILDENV_JAVA_HOME/bin:$PATH"
+  fi
+  exec "$bin" "$@"
+}
+
+run_container() {
+  container_running "$BUILDENV_CONTAINER" \
+    || die "container '$BUILDENV_CONTAINER' (profile '$PROFILE') is not running; start its devcontainer first"
+  local flags=(-i) var script
+  if [[ -t 0 && -t 1 ]]; then flags=(-it); fi
+  for var in "${CONTAINER_FORWARD_ENV[@]}"; do
+    if [[ -n "${!var:-}" ]]; then flags+=(-e "$var=${!var}"); fi
+  done
+  printf -v script '%q ' "$@"
+  # Login shell: the container's ~/.profile sets up the build environment.
+  exec docker exec "${flags[@]}" --user "${USER:-$(id -un)}" --workdir "$PWD" \
+    "$BUILDENV_CONTAINER" bash -l -c "exec $script"
+}
+
+dispatch() {
+  local cmd="$1"
+  shift
+  reset_profile_env
+  resolve_profile
+  if [[ -z "$PROFILE" ]]; then
+    exec "$(find_host_binary "$cmd")" "$@"
+  fi
+  load_profile "$PROFILE"
+  case "$(basename "$cmd")" in
+  mvn | mvnw) compose_maven_args ;;
+  esac
+  if [[ "$BUILDENV_MODE" == container ]]; then
+    run_container "$cmd" "$@"
+  else
+    run_host "$cmd" "$@"
+  fi
+}
+
+cmd_which() {
+  resolve_profile
+  if [[ -z "$PROFILE" ]]; then
+    echo "no profile: no $MARKER_NAME at or above $PWD; tools run on the host unchanged"
+    return
+  fi
+  load_profile "$PROFILE"
+  echo "profile:     $PROFILE"
+  echo "selected by: $PROFILE_SOURCE"
+  if [[ "$BUILDENV_MODE" == container ]]; then
+    local state="not running"
+    if container_running "$BUILDENV_CONTAINER"; then state="running"; fi
+    echo "mode:        container ($BUILDENV_CONTAINER, $state)"
+  else
+    echo "mode:        host"
+    echo "maven home:  ${BUILDENV_MAVEN_HOME:-<first mvn on PATH>}"
+    echo "settings:    ${BUILDENV_SETTINGS:-<Maven default>}"
+  fi
+  echo "local repo:  ${BUILDENV_LOCAL_REPO:-<Maven default>}"
+}
+
+cmd_list() {
+  local file name desc
+  for file in "$PROFILES_DIR"/*.env; do
+    [[ -e "$file" ]] || continue
+    name="$(basename "$file" .env)"
+    desc="$(sed -n '1s/^#[[:space:]]*//p' "$file")"
+    printf '%-22s %s\n' "$name" "$desc"
+  done
+}
+
+describe_path() {
+  if [[ -z "$1" ]]; then
+    echo "$2"
+  elif [[ -e "$1" ]]; then
+    echo "$1"
+  else
+    echo "$1  (MISSING)"
+  fi
+}
+
+cmd_ide() {
+  require_profile
+  cat <<EOF
+Profile $PROFILE (selected by $PROFILE_SOURCE)
+
+IntelliJ: Settings > Build, Execution, Deployment > Build Tools > Maven (stored per project)
+  Maven home path:     $(describe_path "${BUILDENV_MAVEN_HOME:-}" "<bundled / first mvn on PATH>")
+  User settings file:  $(describe_path "${BUILDENV_SETTINGS:-}" "<~/.m2/settings.xml>")  [Override]
+  Local repository:    $(describe_path "${BUILDENV_LOCAL_REPO:-}" "<from settings.xml>")  [Override]
+  Toolchains:          $(describe_path "${BUILDENV_TOOLCHAINS:-}" "<~/.m2/toolchains.xml>")
+Maven > Importing > VM options for importer, and Maven > Runner > VM Options:
+  $LOCK_ARGS
+Project Structure > Project SDK:
+  ${BUILDENV_JDK:-${BUILDENV_JAVA_HOME:-<not set in profile>}}
+EOF
+  if [[ -n "${BUILDENV_TOOLCHAINS:-}" ]]; then
+    echo
+    echo "IntelliJ reads ~/.m2/toolchains.xml; if it differs from the one above, add '-t $BUILDENV_TOOLCHAINS' to the Runner properties."
+  fi
+  if [[ -n "${BUILDENV_EXPORT:-}" && ! -d "$BUILDENV_EXPORT/maven" ]]; then
+    echo
+    echo "Export directory $BUILDENV_EXPORT is not populated; run: buildenv export <container profile>"
+  fi
+}
+
+cmd_export() {
+  local name="${1:-}"
+  if [[ -z "$name" ]]; then
+    resolve_profile
+    name="$PROFILE"
+    [[ -n "$name" ]] || die "usage: buildenv export <profile>"
+  fi
+  load_profile "$name"
+  [[ "$BUILDENV_MODE" == container && -n "${BUILDENV_EXPORT:-}" ]] \
+    || die "profile '$name' is not a container profile with BUILDENV_EXPORT"
+  local sync
+  sync="$(command -v sync-maven-config-from-devcontainer || true)"
+  [[ -n "$sync" ]] || sync="${DEVCONTAINTER_HOME:-$HOME/code/tools/devcontainer}/sync-maven-config-from-devcontainer"
+  [[ -x "$sync" ]] || die "sync-maven-config-from-devcontainer not found"
+  CONTAINER="$BUILDENV_CONTAINER" ENV_DIR="$BUILDENV_EXPORT" LOCAL_MAVEN_HOME="$BUILDENV_EXPORT/maven" \
+    LINK_M2_TOOLCHAINS=false exec "$sync"
+}
+
+main() {
+  local invoked
+  invoked="$(basename "$0")"
+  if [[ "$invoked" != buildenv ]]; then
+    dispatch "$invoked" "$@"
+  fi
+  case "${1:-help}" in
+  run)
+    shift
+    [[ $# -gt 0 ]] || die "usage: buildenv run <command> [args...]"
+    dispatch "$@"
+    ;;
+  which) cmd_which ;;
+  list) cmd_list ;;
+  ide) cmd_ide ;;
+  export)
+    shift
+    cmd_export "$@"
+    ;;
+  help | -h | --help) usage ;;
+  *)
+    usage >&2
+    exit 1
+    ;;
+  esac
+}
+
+main "$@"

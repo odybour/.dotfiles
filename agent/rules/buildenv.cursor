@@ -1,0 +1,2 @@
+description: How to run mvn/npm/helm/gradle on this machine (buildenv per-directory build environments)
+alwaysApply: true
