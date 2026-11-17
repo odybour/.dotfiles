@@ -22,7 +22,7 @@ SELF="$(readlink -f "${BASH_SOURCE[0]}")"
 LOCK_ARGS="-Daether.syncContext.named.factory=file-lock -Daether.syncContext.named.nameMapper=file-gav"
 CONTAINER_FORWARD_ENV=(MAVEN_ARGS)
 PROFILE_VARS=(BUILDENV_MODE BUILDENV_CONTAINER BUILDENV_EXPORT BUILDENV_LOCAL_REPO BUILDENV_JDK
-  BUILDENV_MAVEN_HOME BUILDENV_SETTINGS BUILDENV_TOOLCHAINS BUILDENV_JAVA_HOME)
+  BUILDENV_MAVEN_HOME BUILDENV_SETTINGS BUILDENV_TOOLCHAINS)
 
 die() {
   echo "buildenv: $*" >&2
@@ -35,25 +35,37 @@ Usage:
   <tool> [args...]               mvn, npm, helm, gradle symlinked to buildenv run in the project's profile
   buildenv run <cmd> [args...]   run any command (e.g. ./gradlew, java) in the project's profile
   buildenv which                 show the profile that applies to the current directory
-  buildenv list                  list available profiles
+  buildenv list                  list available profiles and their definition files
   buildenv ide                   print host IDE (IntelliJ) Maven settings for the current project
   buildenv export [profile]      copy Maven home, settings.xml, toolchains.xml from the profile's
                                  container to its host export directory (for host IDEs)
 
-Profile selection: \$BUILDENV_PROFILE, else the nearest $MARKER_NAME at or above \$PWD.
+Profile selection: nearest $MARKER_NAME at or above \$PWD, or shell variable \$BUILDENV_PROFILE below.
 Profiles: $PROFILES_DIR/<name>.env
 
-Profile variables:
-  BUILDENV_MODE        container | host
-  BUILDENV_CONTAINER   container to run commands in (container mode)
-  BUILDENV_EXPORT      host dir with maven/, settings.xml, toolchains.xml (defaults for the next three)
-  BUILDENV_MAVEN_HOME  Maven home used in host mode and by host IDEs
-  BUILDENV_SETTINGS    settings.xml (passed with -s in host mode)
-  BUILDENV_TOOLCHAINS  toolchains.xml (passed with -t in host mode)
-  BUILDENV_LOCAL_REPO  host path of the local repository
-  BUILDENV_JDK         suggested IDE project SDK
-  BUILDENV_JAVA_HOME   JAVA_HOME for host-mode commands (optional)
-  any other variable (e.g. GRADLE_USER_HOME) is exported to host-mode commands
+Shell environment (optional; overrides defaults, not profile definitions):
+  BUILDENV_PROFILE   force a profile instead of the nearest $MARKER_NAME
+  BUILDENV_HOME      profiles directory (default: $BUILDENV_HOME)
+
+------------------------------------------------------------------------------
+PROFILE FILE VARIABLES — put these in $PROFILES_DIR/<name>.env
+(not read from your shell; exporting them in the environment has no effect)
+------------------------------------------------------------------------------
+  BUILDENV_MODE          container | host
+  BUILDENV_LOCAL_REPO    host path of the local repository
+
+  container mode:
+    BUILDENV_CONTAINER     container to docker exec into
+    BUILDENV_EXPORT        host dir for buildenv export (maven/, settings.xml, toolchains.xml)
+    BUILDENV_JDK           Project SDK line in buildenv ide
+
+  host mode:
+    BUILDENV_MAVEN_HOME    Maven installation to run
+    BUILDENV_SETTINGS      settings.xml (passed with -s)
+
+  Any other variable in the profile file (e.g. GRADLE_USER_HOME) is exported to
+  host-mode commands only.
+------------------------------------------------------------------------------
 EOF
 }
 
@@ -171,9 +183,6 @@ run_host() {
   local cmd="$1" bin
   shift
   bin="$(find_host_binary "$cmd")"
-  if [[ -n "${BUILDENV_JAVA_HOME:-}" ]]; then
-    export JAVA_HOME="$BUILDENV_JAVA_HOME" PATH="$BUILDENV_JAVA_HOME/bin:$PATH"
-  fi
   exec "$bin" "$@"
 }
 
@@ -219,6 +228,7 @@ cmd_which() {
   load_profile "$PROFILE"
   echo "profile:     $PROFILE"
   echo "selected by: $PROFILE_SOURCE"
+  echo "definition:  $PROFILES_DIR/$PROFILE.env"
   if [[ "$BUILDENV_MODE" == container ]]; then
     local state="not running"
     if container_running "$BUILDENV_CONTAINER"; then state="running"; fi
@@ -237,7 +247,7 @@ cmd_list() {
     [[ -e "$file" ]] || continue
     name="$(basename "$file" .env)"
     desc="$(sed -n '1s/^#[[:space:]]*//p' "$file")"
-    printf '%-22s %s\n' "$name" "$desc"
+    printf '%-24s %s  %s\n' "$name" "$desc" "$file"
   done
 }
 
@@ -264,7 +274,7 @@ IntelliJ: Settings > Build, Execution, Deployment > Build Tools > Maven (stored 
 Maven > Importing > VM options for importer, and Maven > Runner > VM Options:
   $LOCK_ARGS
 Project Structure > Project SDK:
-  ${BUILDENV_JDK:-${BUILDENV_JAVA_HOME:-<not set in profile>}}
+  ${BUILDENV_JDK:-<not set in profile>}
 EOF
   if [[ -n "${BUILDENV_TOOLCHAINS:-}" ]]; then
     echo

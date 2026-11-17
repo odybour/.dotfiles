@@ -5,6 +5,8 @@
 from the nearest **`.buildenv`** file walking up from `$PWD`, or from **`$BUILDENV_PROFILE`**.
 
 Profiles live in `~/.config/buildenv/profiles/*.env` (stowed from `buildenv/.config/buildenv/`).
+Variables in those files define the environment; agents normally only run `mvn` / `buildenv which`
+(see `buildenv help` for the profile-file schema).
 
 ## Layout
 
@@ -48,12 +50,12 @@ you (or agent):  mvn clean install
 
 ```
 ~/programming/.buildenv     →  personal
-~/code/.buildenv            →  altiplano-master-25
+~/code/.buildenv            →  altiplano-dev-master-25
 ~/code/some-nokia-repo/     →  inherits ~/code → container mvn
 ```
 
-Nokia work uses **container** profiles only (`altiplano-master`, `altiplano-master-25`, …).
-Start the matching devcontainer first.
+Nokia work uses **container** profiles only; **profile name = container name**
+(`altiplano-dev-master`, `altiplano-dev-master-25`, …). Start the matching devcontainer first.
 
 ## Parallel agents / IDEs
 
@@ -73,7 +75,7 @@ cd <project> && buildenv ide
 Refresh host copy of container Maven for IDE:
 
 ```bash
-buildenv export altiplano-master-25   # → ~/env/profiles/<profile>/
+buildenv export altiplano-dev-master-25   # → ~/env/profiles/<profile>/
 ```
 
 **`devcon`**: explicit container when several run: `devcon -c altiplano-dev-master-25 -- mvn …`
@@ -81,8 +83,8 @@ buildenv export altiplano-master-25   # → ~/env/profiles/<profile>/
 ## Commands
 
 ```bash
-buildenv which          # profile for $PWD
-buildenv list           # profile names
+buildenv which          # profile for $PWD (marker + definition .env)
+buildenv list           # profiles and ~/.config/buildenv/profiles/<name>.env
 buildenv ide            # IntelliJ Maven hints for this project
 buildenv export <name>  # sync Maven from container → ~/env/profiles/<name>/
 buildenv run <cmd> …    # e.g. ./gradlew, java inside profile
