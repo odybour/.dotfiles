@@ -1,0 +1,37 @@
+<application>
+  <component name="ActionMacroManager">
+    <macro name="show diff with working tree">
+      <action id="Git.Ref.Diff.With.Local" />
+    </macro>
+    <macro name="test2">
+      <action id="Git.Ref.Diff.With.Local" />
+    </macro>
+    <macro name="ddd">
+      <action id="ActivateProjectToolWindow" />
+    </macro>
+    <macro name="aaa">
+      <action id="ActivateVersionControlToolWindow" />
+      <action id="GotoAction" />
+      <typing text-keycode="83:0;72:0;79:0;87:0">show</typing>
+      <shortuct text="ENTER" />
+      <action id="Macro.show diff with working tree" />
+      <action id="Git.Ref.Diff.With.Local" />
+    </macro>
+    <macro name="bbbb">
+      <action id="ActivateVersionControlToolWindow" />
+      <action id="GotoAction" />
+      <typing text-keycode="83:0;72:0;79:0;87:0;32:0;68:0;73:0;70:0;70:0;32:0;87:0;73:0;84:0;72:0;32:0;87:0;79:0;82:0;75:0;73:0;78:0;71:0;32:0;84:0;82:0;69:0;69:0">show&amp;#x20;diff&amp;#x20;with&amp;#x20;working&amp;#x20;tree</typing>
+      <shortuct text="ENTER" />
+      <action id="Macro.show diff with working tree" />
+      <action id="Git.Ref.Diff.With.Local" />
+    </macro>
+    <macro name="ShowDiffWithWorkingTree">
+      <action id="ActivateVersionControlToolWindow" />
+      <action id="Git.Ref.Diff.With.Local" />
+    </macro>
+    <macro name="reload_from_disk">
+      <shortuct text="control P" />
+      <typing text-keycode="82:0">r</typing>
+    </macro>
+  </component>
+</application>
